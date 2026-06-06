@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — AgentReady</title>
+<meta name="description" content="About Adam Bezance — Power Platform Principal Consultant, community leader, and the person behind AgentReady.">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── About layout ──────────────────────────────────────────── */
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1.8fr; gap: 72px; align-items: start;
+}
+.about-aside { display: flex; flex-direction: column; gap: 20px; }
+
+/* Photo block */
+.photo-block {
+  aspect-ratio: 3/4; border-radius: var(--r-xl);
+  background: linear-gradient(135deg, rgba(29,111,232,0.12) 0%, rgba(29,111,232,0.04) 100%);
+  border: 1px solid var(--blue-brd);
+  box-shadow: 0 0 32px rgba(29,111,232,0.20), var(--glow-card);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 80px; font-weight: 800; color: var(--blue);
+  opacity: 1; letter-spacing: -0.05em;
+}
+.photo-placeholder { opacity: 0.22; }
+
+/* Profile card */
+.profile-card {
+  padding: 20px; border-radius: var(--r-lg);
+  background: var(--surface); border: 1px solid var(--border);
+  box-shadow: var(--glow-card);
+  display: flex; flex-direction: column; gap: 14px;
+}
+.profile-name  { font-size: 18px; font-weight: 800; color: var(--fg); letter-spacing: -0.02em; }
+.profile-role  { font-size: 13px; color: var(--fg-2); line-height: 1.4; }
+.profile-tags  { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* Content column */
+.about-content { display: flex; flex-direction: column; gap: 36px; }
+.about-section { display: flex; flex-direction: column; gap: 14px; }
+.about-h3 {
+  font-size: 15px; font-weight: 700; color: var(--fg);
+  letter-spacing: -0.01em; padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.about-p { font-size: 16px; color: var(--fg-2); line-height: 1.72; }
+.about-p strong { color: var(--fg); font-weight: 600; }
+.about-p a { color: var(--blue-lt); text-decoration: none; }
+.about-p a:hover { text-decoration: underline; }
+
+/* Credentials */
+.creds { display: flex; flex-direction: column; gap: 10px; }
+.cred {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 16px; border-radius: var(--r-md);
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  transition: border-color var(--t-base) var(--ease);
+}
+.cred:hover { border-color: var(--blue-brd); }
+.cred-icon {
+  width: 36px; height: 36px; border-radius: var(--r-sm);
+  background: var(--blue-dim); border: 1px solid var(--blue-brd);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.cred-name  { font-size: 14px; font-weight: 600; color: var(--fg); letter-spacing: -0.01em; }
+.cred-desc  { font-size: 13px; color: var(--fg-2); line-height: 1.45; }
+
+/* AgentReady section */
+.ar-box {
+  padding: 24px 28px; border-radius: var(--r-lg);
+  background: var(--blue-dim); border: 1px solid var(--blue-brd);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.ar-box-title { font-size: 15px; font-weight: 700; color: var(--fg); letter-spacing: -0.01em; }
+.ar-box-body  { font-size: 14px; color: var(--fg-2); line-height: 1.65; }
+.ar-box-body strong { color: var(--fg); }
+
+/* Contact */
+.contact-links { display: flex; flex-direction: column; gap: 8px; }
+.contact-link {
+  display: flex; gap: 12px; align-items: center;
+  padding: 12px 14px; border-radius: var(--r-md);
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  text-decoration: none; font-size: 14px; color: var(--fg-2);
+  transition: all var(--t-base) var(--ease);
+}
+.contact-link:hover { border-color: var(--blue-brd); color: var(--fg); }
+.contact-link-icon {
+  width: 32px; height: 32px; border-radius: var(--r-sm);
+  background: var(--blue-dim); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.contact-link-label { font-size: 11px; color: var(--fg-3); display: block; margin-top: 1px; }
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .photo-block { aspect-ratio: 4/3; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-mark">AR</div>
+      <div class="nav-identity">
+        <span class="nav-name">AgentReady</span>
+        <span class="nav-sub">Microsoft AI · Copilot · Agents</span>
+      </div>
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="learn.html">Learn</a>
+      <a class="nav-link" href="pathways.html">Pathways</a>
+      <a class="nav-link" href="use-cases.html">Use Cases</a>
+      <a class="nav-link" href="resources.html">Resources</a>
+      <a class="nav-link active" href="about.html">About</a>
+      <a class="nav-cta" href="index.html#newsletter">Subscribe</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-inner">
+    <div class="eyebrow">About</div>
+    <h1 class="page-title">Adam Bezance</h1>
+    <p class="page-desc">Power Platform Principal Consultant. Community leader. The person behind AgentReady.</p>
+  </div>
+</div>
+
+<!-- ABOUT CONTENT -->
+<section class="section">
+  <div class="section-inner">
+    <div class="about-grid">
+
+      <!-- Aside -->
+      <div class="about-aside reveal">
+        <div class="photo-block"><span class="photo-placeholder">AB</span></div>
+        <div class="profile-card">
+          <div>
+            <div class="profile-name">Adam Bezance</div>
+            <div class="profile-role">Power Platform Principal Consultant · Robiquity<br>Microsoft Power Platform Super User</div>
+          </div>
+          <div class="profile-tags">
+            <span class="pill pill-blue">Power Platform</span>
+            <span class="pill pill-blue">Copilot Studio</span>
+            <span class="pill pill-blue">M365 Copilot</span>
+            <span class="pill pill-neutral">Power Automate</span>
+            <span class="pill pill-neutral">Power Apps</span>
+            <span class="pill pill-neutral">Dataverse</span>
+          </div>
+        </div>
+        <div class="contact-links">
+          <a class="contact-link" href="https://linkedin.com/in/adambezance" target="_blank" rel="noopener">
+            <div class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#7BB3FF"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2" fill="#7BB3FF"/></svg>
+            </div>
+            <div>
+              <div>LinkedIn</div>
+              <span class="contact-link-label">Connect with Adam</span>
+            </div>
+          </a>
+          <a class="contact-link" href="https://twitter.com/adambezance" target="_blank" rel="noopener">
+            <div class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M4 20L20 4" stroke="#7BB3FF" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <div>Twitter / X</div>
+              <span class="contact-link-label">@adambezance</span>
+            </div>
+          </a>
+          <a class="contact-link" href="mailto:adam@agentready.io">
+            <div class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="#7BB3FF" stroke-width="2"/><path d="M2 7l10 7 10-7" stroke="#7BB3FF" stroke-width="2"/></svg>
+            </div>
+            <div>
+              <div>Email</div>
+              <span class="contact-link-label">adam@agentready.io</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div class="about-content">
+
+        <div class="about-section reveal">
+          <div class="about-h3">Who I am</div>
+          <p class="about-p">I'm Adam Bezance — a <strong>Power Platform Principal Consultant at <a href="https://robiquity.com" target="_blank" rel="noopener">Robiquity</a></strong>, a specialist Microsoft technology consultancy. I spend my days designing and building solutions using Power Platform, Copilot Studio, M365 Copilot, Power Automate, Power Apps, and Dataverse for organisations across different sectors and sizes.</p>
+          <p class="about-p">I've been working in and around Microsoft technology for over six years, with a particular focus on automation and AI-driven solutions. The shift towards agentic AI and Copilot Studio has been the most significant platform evolution I've seen in that time — and it's what drives most of my professional work right now.</p>
+        </div>
+
+        <div class="about-section reveal">
+          <div class="about-h3">Community work</div>
+          <p class="about-p">Alongside my consulting work, I'm active in the Microsoft community in the UK. I'm a <strong>Microsoft Power Platform Super User</strong> and I co-founded two community initiatives:</p>
+          <div class="creds">
+            <div class="cred">
+              <div class="cred-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="#7BB3FF" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#7BB3FF" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="#7BB3FF" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <div class="cred-name">East of England Power Platform Summit</div>
+                <div class="cred-desc">Co-founder of the regional Power Platform Summit for the East of England. A community event bringing together practitioners, consultants, and enthusiasts across the region to share knowledge and learn from each other.</div>
+              </div>
+            </div>
+            <div class="cred">
+              <div class="cred-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#7BB3FF" stroke-width="2"/><path d="M12 8v4l3 3" stroke="#7BB3FF" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <div class="cred-name">Norfolk Power Platform User Group</div>
+                <div class="cred-desc">Co-founder of the Norfolk PPUG — a local community for Power Platform practitioners in Norfolk. Regular meetups covering Power Apps, Power Automate, Copilot Studio, and the broader Microsoft AI ecosystem.</div>
+              </div>
+            </div>
+            <div class="cred">
+              <div class="cred-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke="#7BB3FF" stroke-width="2" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="cred-name">Microsoft Power Platform Super User</div>
+                <div class="cred-desc">Recognised by Microsoft for contributions to the Power Platform community — answering questions, producing content, and helping practitioners get value from the platform.</div>
+              </div>
+            </div>
+          </div>
+          <p class="about-p">I also speak at conferences and community events. Recent and upcoming talks include sessions on Copilot Studio, M365 Copilot extensibility, and practical AI agent design at events including the Microsoft Power Platform Conference, European Power Platform Conference, and community user groups.</p>
+        </div>
+
+        <div class="about-section reveal">
+          <div class="about-h3">Why I built AgentReady</div>
+          <div class="ar-box">
+            <div class="ar-box-title">The honest version</div>
+            <div class="ar-box-body">
+              When Microsoft started rolling out Copilot and agents across the platform, the marketing was — to put it generously — enthusiastic. A lot of organisations jumped into pilots with high expectations and came away disappointed because nobody had been straight with them about what these tools actually do, what they cost, and what it takes to make them work reliably.
+              <br><br>
+              I kept having the same conversations with clients, at user groups, and on calls with peers. <strong>AgentReady is my attempt to put those conversations in writing, in public, where anyone can access them.</strong>
+              <br><br>
+              It's not affiliated with Microsoft. There's no vendor agenda. It's just a practitioner writing down what he's learned from building these things for real organisations.
+            </div>
+          </div>
+        </div>
+
+        <div class="about-section reveal">
+          <div class="about-h3">What I work on professionally</div>
+          <p class="about-p">At <a href="https://robiquity.com" target="_blank" rel="noopener">Robiquity</a>, I work with organisations to design and build Power Platform solutions — from straightforward Power Automate workflows to full Copilot Studio agent deployments integrated with enterprise systems. A large proportion of my current work involves M365 Copilot enablement and governance for organisations rolling out Copilot to their workforce.</p>
+          <p class="about-p">If you're working through a Microsoft AI project and want to talk it through, feel free to get in touch via <a href="https://linkedin.com/in/adambezance" target="_blank" rel="noopener">LinkedIn</a>.</p>
+        </div>
+
+        <div class="about-section reveal">
+          <div class="about-h3">A note on this site</div>
+          <p class="about-p">AgentReady is an independent resource — it's not my employer's site, it's not sponsored, and it's not affiliated with or endorsed by Microsoft. The opinions and content here are my own based on my experience as a practitioner.</p>
+          <p class="about-p">Everything on this site is free and open access. There's a newsletter if you want to follow along as I add content. No paywall, no gating, no premium tier.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER CTA -->
+<section class="cta-band" id="newsletter">
+  <div class="cta-band-bg"></div>
+  <div class="cta-band-inner reveal">
+    <div class="pill pill-blue">Stay in the loop</div>
+    <h2 class="cta-title">Get new content<br>when it's published.</h2>
+    <p class="cta-sub">No noise. Just practical Microsoft AI content. Unsubscribe any time.</p>
+    <form class="nl-form" style="max-width:480px;width:100%" onsubmit="return false;">
+      <input class="nl-input" type="email" placeholder="your@email.com" required>
+      <button class="nl-btn" type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-mark">AR</div>
+        <span class="footer-wordmark">AgentReady</span>
+      </div>
+      <div class="footer-tagline">Your guide to Microsoft AI, Copilot, and agents</div>
+      <p class="footer-desc">Independent education by <a href="about.html">Adam Bezance</a>. No vendor agenda — just honest, practical content for people working with Microsoft AI day to day.</p>
+    </div>
+    <div>
+      <div class="footer-nav-title">Site</div>
+      <div class="footer-nav-links">
+        <a href="index.html">Home</a>
+        <a href="learn.html">Learn</a>
+        <a href="pathways.html">Pathways</a>
+        <a href="use-cases.html">Use Cases</a>
+        <a href="resources.html">Resources</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-nl-title">Stay up to date</div>
+      <div class="footer-nl-desc">New articles and use cases, straight to your inbox. No noise.</div>
+      <form class="nl-form" onsubmit="return false;">
+        <input class="nl-input" type="email" placeholder="your@email.com" required>
+        <button class="nl-btn" type="submit" style="padding:12px 20px;font-size:14px">Go</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 AgentReady · An independent resource by <a href="about.html">Adam Bezance</a></span>
+    <span class="footer-copy">Not affiliated with or endorsed by Microsoft</span>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 30));
+  const toggle = document.getElementById('nav-toggle');
+  const links  = document.getElementById('nav-links');
+  toggle?.addEventListener('click', () => links.classList.toggle('open'));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, { threshold: 0.10 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

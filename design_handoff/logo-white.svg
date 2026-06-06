@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18"></stop>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.00"></stop>
+    </linearGradient>
+  </defs>
+  
+  <path d="M32 4 L57 18 L57 46 L32 60 L7 46 L7 18 Z" fill="#ffffff"></path>
+  <path d="M32 4 L57 18 L57 32 L7 32 L7 18 Z" fill="url(#shine)"></path>
+  <text x="32" y="41" text-anchor="middle" font-family="&#39;Segoe UI&#39;, system-ui, -apple-system, sans-serif" font-weight="700" font-size="20" letter-spacing="-0.5" fill="#0078D4">AB</text>
+  <circle cx="32" cy="4" r="2.5" fill="#0078D4" fill-opacity="0.7"></circle>
+  <circle cx="57" cy="18" r="2.5" fill="#0078D4" fill-opacity="0.7"></circle>
+  <circle cx="57" cy="46" r="2.5" fill="#0078D4" fill-opacity="0.7"></circle>
+  <circle cx="32" cy="60" r="2.5" fill="#0078D4" fill-opacity="0.7"></circle>
+  <circle cx="7" cy="46" r="2.5" fill="#0078D4" fill-opacity="0.7"></circle>
+  <circle cx="7" cy="18" r="2.5" fill="#0078D4" fill-opacity="0.7"></circle>
+</svg>

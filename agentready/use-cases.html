@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Use Cases — AgentReady</title>
+<meta name="description" content="Real-world Microsoft AI use cases. Meeting summarisation, HR agents, IT helpdesk agents, and more — with what you need and what realistic outcomes look like.">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── Filter bar ────────────────────────────────────────────── */
+.filter-bar {
+  background: var(--base); border-bottom: 1px solid var(--border);
+  padding: 0 var(--pad-x);
+  position: sticky; top: var(--nav-h); z-index: 50;
+}
+.filter-bar-inner {
+  max-width: var(--wide); margin: 0 auto;
+  display: flex; gap: 4px; align-items: center; overflow-x: auto;
+  scrollbar-width: none;
+}
+.filter-bar-inner::-webkit-scrollbar { display: none; }
+.filter-btn {
+  font-size: 13px; font-weight: 600; color: var(--fg-3);
+  background: none; border: none; cursor: pointer;
+  padding: 16px 14px; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.filter-btn:hover   { color: var(--fg-2); }
+.filter-btn.on      { color: var(--blue-lt); border-bottom-color: var(--blue); }
+
+/* ── Use case grid ─────────────────────────────────────────── */
+.uc-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  margin-top: 0;
+}
+.uc-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.uc-card-header { padding: 20px 24px 16px; border-bottom: 1px solid var(--border); }
+.uc-card-body   { padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+.uc-card-footer { padding: 16px 24px; border-top: 1px solid var(--border); margin-top: auto; }
+
+.uc-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.uc-name { font-size: 17px; font-weight: 700; color: var(--fg); line-height: 1.3; letter-spacing: -0.02em; }
+
+.uc-section-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg-3); margin-bottom: 6px;
+}
+.uc-desc { font-size: 14px; color: var(--fg-2); line-height: 1.6; }
+.uc-desc strong { color: var(--fg); font-weight: 600; }
+
+.uc-reqs { display: flex; flex-direction: column; gap: 5px; }
+.uc-req {
+  display: flex; gap: 8px; align-items: flex-start;
+  font-size: 13px; color: var(--fg-2); line-height: 1.45;
+}
+.uc-req::before { content: '·'; color: var(--blue); font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+
+.uc-outcome {
+  padding: 12px 14px; border-radius: var(--r-md);
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  font-size: 13px; color: var(--fg-2); line-height: 1.55;
+}
+.uc-outcome strong { color: var(--fg); font-weight: 600; }
+
+.uc-difficulty {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--fg-3);
+}
+.difficulty-dots { display: flex; gap: 4px; }
+.difficulty-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border-md);
+}
+.difficulty-dot.filled { background: var(--blue); }
+
+/* Highlight card */
+.uc-card.featured-uc {
+  grid-column: span 2;
+}
+.uc-card.featured-uc .uc-name { font-size: 20px; }
+
+@media (max-width: 900px) {
+  .uc-grid { grid-template-columns: 1fr 1fr; }
+  .uc-card.featured-uc { grid-column: span 2; }
+}
+@media (max-width: 640px) {
+  .uc-grid { grid-template-columns: 1fr; }
+  .uc-card.featured-uc { grid-column: span 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-mark">AR</div>
+      <div class="nav-identity">
+        <span class="nav-name">AgentReady</span>
+        <span class="nav-sub">Microsoft AI · Copilot · Agents</span>
+      </div>
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="learn.html">Learn</a>
+      <a class="nav-link" href="pathways.html">Pathways</a>
+      <a class="nav-link active" href="use-cases.html">Use Cases</a>
+      <a class="nav-link" href="resources.html">Resources</a>
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-cta" href="index.html#newsletter">Subscribe</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-inner">
+    <div class="eyebrow">Use Cases</div>
+    <h1 class="page-title">What you can build</h1>
+    <p class="page-desc">Real scenarios, honest requirements, and realistic outcomes — not vendor demos. Each card tells you what the use case is, what you actually need, and what good looks like.</p>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-bar-inner">
+    <button class="filter-btn on" data-filter="all">All use cases</button>
+    <button class="filter-btn" data-filter="m365">M365 Copilot</button>
+    <button class="filter-btn" data-filter="studio">Copilot Studio</button>
+    <button class="filter-btn" data-filter="agent">Agents</button>
+  </div>
+</div>
+
+<!-- USE CASES -->
+<section class="section">
+  <div class="section-inner">
+    <div class="uc-grid" id="uc-grid">
+
+      <!-- 1. Meeting Summarisation -->
+      <div class="card uc-card featured-uc reveal" id="meeting-summary" data-tags="m365">
+        <div class="uc-card-header">
+          <div class="uc-tags">
+            <span class="pill pill-blue">M365 Copilot</span>
+            <span class="pill pill-neutral">Teams</span>
+            <span class="pill pill-green">Quick win</span>
+          </div>
+          <div class="uc-name">Meeting summarisation and action capture</div>
+        </div>
+        <div class="uc-card-body">
+          <div>
+            <div class="uc-section-label">What it does</div>
+            <p class="uc-desc">After a Teams meeting, Copilot generates a structured summary covering key discussion points, decisions made, and action items with owners. Users can also ask follow-up questions — "What did we decide about the budget?" or "Who is responsible for the design review?" — directly in the meeting recap tab. Works on recordings you weren't in, which is where the time saving is most obvious.</p>
+          </div>
+          <div>
+            <div class="uc-section-label">What you need</div>
+            <div class="uc-reqs">
+              <div class="uc-req">M365 Copilot add-on license assigned to the user</div>
+              <div class="uc-req">Teams transcription enabled (admin setting in Teams admin centre)</div>
+              <div class="uc-req">Meeting must be recorded or have a transcript — live meetings without recording don't produce a recap</div>
+              <div class="uc-req">No additional configuration required — works out of the box once licensed</div>
+            </div>
+          </div>
+          <div>
+            <div class="uc-section-label">Realistic outcome</div>
+            <div class="uc-outcome">For a 45-minute meeting, Copilot produces a usable summary in 5–10 seconds. Quality is good for clear, structured meetings with distinct agenda items. <strong>Quality degrades with overlapping speakers, heavy accents, or highly technical terminology</strong> — the transcript quality limits the summary quality. Action items are captured reasonably well but should always be reviewed before sharing.</div>
+          </div>
+        </div>
+        <div class="uc-card-footer">
+          <div class="uc-difficulty">
+            <span>Difficulty</span>
+            <div class="difficulty-dots">
+              <div class="difficulty-dot filled"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div>
+            </div>
+            <span>Low — no build required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Email Drafting -->
+      <div class="card uc-card reveal reveal-d1" data-tags="m365">
+        <div class="uc-card-header">
+          <div class="uc-tags">
+            <span class="pill pill-blue">M365 Copilot</span>
+            <span class="pill pill-neutral">Outlook</span>
+          </div>
+          <div class="uc-name">Email drafting and thread summarisation</div>
+        </div>
+        <div class="uc-card-body">
+          <div>
+            <div class="uc-section-label">What it does</div>
+            <p class="uc-desc">Summarises long email threads to the key points and open questions, and drafts reply emails from a brief instruction. Reduces time on routine correspondence and helps people catch up after being away.</p>
+          </div>
+          <div>
+            <div class="uc-section-label">What you need</div>
+            <div class="uc-reqs">
+              <div class="uc-req">M365 Copilot license</div>
+              <div class="uc-req">Outlook (desktop or web) — not Outlook Classic</div>
+            </div>
+          </div>
+          <div>
+            <div class="uc-section-label">Realistic outcome</div>
+            <div class="uc-outcome"><strong>Summarisation is strong.</strong> Drafting works well for routine, professional emails. Complex or politically sensitive correspondence still needs careful human review — Copilot can miss tone.</div>
+          </div>
+        </div>
+        <div class="uc-card-footer">
+          <div class="uc-difficulty">
+            <div class="difficulty-dots">
+              <div class="difficulty-dot filled"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div>
+            </div>
+            <span style="font-size:12px;color:var(--fg-3)">Low — no build required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. HR Onboarding Agent -->
+      <div class="card uc-card reveal" data-tags="studio agent" id="hr-agent">
+        <div class="uc-card-header">
+          <div class="uc-tags">
+            <span class="pill pill-violet">Copilot Studio</span>
+            <span class="pill pill-neutral">HR</span>
+          </div>
+          <div class="uc-name">HR onboarding and policy agent</div>
+        </div>
+        <div class="uc-card-body">
+          <div>
+            <div class="uc-section-label">What it does</div>
+            <p class="uc-desc">A Teams-deployed agent that answers employee questions about HR policies, onboarding steps, benefits, and processes. Draws from your SharePoint HR intranet and uploaded policy documents. Can trigger flows to submit requests — such as booking an induction session or raising an IT access request.</p>
+          </div>
+          <div>
+            <div class="uc-section-label">What you need</div>
+            <div class="uc-reqs">
+              <div class="uc-req">Copilot Studio license (or Power Platform per-message capacity)</div>
+              <div class="uc-req">SharePoint HR site with up-to-date policy content</div>
+              <div class="uc-req">Power Automate for action flows (e.g. raise a ticket, send a notification)</div>
+              <div class="uc-req">Teams admin approval to publish the agent as an app</div>
+            </div>
+          </div>
+          <div>
+            <div class="uc-section-label">Realistic outcome</div>
+            <div class="uc-outcome">A well-built HR agent handles 60–75% of common HR queries without human escalation. <strong>Content quality is the biggest variable</strong> — if the source SharePoint pages are outdated or inconsistent, the agent will produce inconsistent answers. Generative AI doesn't fix bad source material.</div>
+          </div>
+        </div>
+        <div class="uc-card-footer">
+          <div class="uc-difficulty">
+            <div class="difficulty-dots">
+              <div class="difficulty-dot filled"></div><div class="difficulty-dot filled"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div>
+            </div>
+            <span style="font-size:12px;color:var(--fg-3)">Medium — 1–2 week build</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. IT Helpdesk Agent -->
+      <div class="card uc-card reveal reveal-d1" data-tags="studio agent" id="it-helpdesk">
+        <div class="uc-card-header">
+          <div class="uc-tags">
+            <span class="pill pill-violet">Copilot Studio</span>
+            <span class="pill pill-neutral">IT</span>
+            <span class="pill pill-blue">Agent</span>
+          </div>
+          <div class="uc-name">IT helpdesk and ticket creation agent</div>
+        </div>
+        <div class="uc-card-body">
+          <div>
+            <div class="uc-section-label">What it does</div>
+            <p class="uc-desc">Handles first-line IT queries in Teams, answering common questions from your IT knowledge base and automatically raising tickets in ServiceNow, Jira Service Management, or similar via Power Automate. Gathers the right information from the user before creating the ticket, reducing back-and-forth for IT staff.</p>
+          </div>
+          <div>
+            <div class="uc-section-label">What you need</div>
+            <div class="uc-reqs">
+              <div class="uc-req">Copilot Studio license</div>
+              <div class="uc-req">Power Automate with a connector to your ITSM platform (ServiceNow, Jira, or similar)</div>
+              <div class="uc-req">IT knowledge base content (SharePoint or uploaded documents)</div>
+              <div class="uc-req">Defined escalation path to human IT agents</div>
+            </div>
+          </div>
+          <div>
+            <div class="uc-section-label">Realistic outcome</div>
+            <div class="uc-outcome">Significant reduction in IT ticket volume from routine queries (password resets, software requests, VPN help). <strong>Ticket quality improves</strong> because the agent collects structured information before escalating. ROI is high for IT teams handling large volumes of repetitive requests.</div>
+          </div>
+        </div>
+        <div class="uc-card-footer">
+          <div class="uc-difficulty">
+            <div class="difficulty-dots">
+              <div class="difficulty-dot filled"></div><div class="difficulty-dot filled"></div><div class="difficulty-dot filled"></div><div class="difficulty-dot"></div>
+            </div>
+            <span style="font-size:12px;color:var(--fg-3)">Medium-high — ITSM integration needed</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Document Generation -->
+      <div class="card uc-card reveal" data-tags="m365">
+        <div class="uc-card-header">
+          <div class="uc-tags">
+            <span class="pill pill-blue">M365 Copilot</span>
+            <span class="pill pill-neutral">Word · PowerPoint</span>
+          </div>
+          <div class="uc-name">Document and presentation drafting</div>
+        </div>
+        <div class="uc-card-body">
+          <div>
+            <div class="uc-section-label">What it does</div>
+            <p class="uc-desc">Draft business documents in Word from a brief, pulling in context from referenced files. Generate PowerPoint presentations from Word documents, briefs, or from scratch. Rewrites, expands, or condenses existing content.</p>
+          </div>
+          <div>
+            <div class="uc-section-label">What you need</div>
+            <div class="uc-reqs">
+              <div class="uc-req">M365 Copilot license</div>
+              <div class="uc-req">Word or PowerPoint (Microsoft 365 subscription, not Office 2019/2021)</div>
+            </div>
+          </div>
+          <div>
+            <div class="uc-section-label">Realistic outcome</div>
+            <div class="uc-outcome">Good for first drafts that you then edit. PowerPoint generation from Word documents is impressively fast but slides need redesigning — the layout is functional, not polished. <strong>Best treated as a starting point, not a finished product.</strong></div>
+          </div>
+        </div>
+        <div class="uc-card-footer">
+          <div class="uc-difficulty">
+            <div class="difficulty-dots">
+              <div class="difficulty-dot filled"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div>
+            </div>
+            <span style="font-size:12px;color:var(--fg-3)">Low — no build required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Knowledge Base Q&A Agent -->
+      <div class="card uc-card reveal reveal-d1" data-tags="studio agent">
+        <div class="uc-card-header">
+          <div class="uc-tags">
+            <span class="pill pill-violet">Copilot Studio</span>
+            <span class="pill pill-neutral">Knowledge</span>
+          </div>
+          <div class="uc-name">Internal knowledge base Q&A agent</div>
+        </div>
+        <div class="uc-card-body">
+          <div>
+            <div class="uc-section-label">What it does</div>
+            <p class="uc-desc">A conversational interface for your SharePoint intranet or document library. Employees ask questions in natural language and get direct, cited answers rather than search results they have to trawl through. Works well for compliance documentation, internal processes, and product knowledge.</p>
+          </div>
+          <div>
+            <div class="uc-section-label">What you need</div>
+            <div class="uc-reqs">
+              <div class="uc-req">Copilot Studio license</div>
+              <div class="uc-req">Well-structured, up-to-date SharePoint content</div>
+              <div class="uc-req">Consistent permission model on SharePoint (agent respects permissions)</div>
+            </div>
+          </div>
+          <div>
+            <div class="uc-section-label">Realistic outcome</div>
+            <div class="uc-outcome">Effective for dense, text-based documentation. Answer quality degrades when documents contradict each other or when content is in tables, diagrams, or embedded PDFs. <strong>Invest in the content before the agent.</strong></div>
+          </div>
+        </div>
+        <div class="uc-card-footer">
+          <div class="uc-difficulty">
+            <div class="difficulty-dots">
+              <div class="difficulty-dot filled"></div><div class="difficulty-dot filled"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div>
+            </div>
+            <span style="font-size:12px;color:var(--fg-3)">Low-medium — hours to days</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Autonomous Monitoring Agent -->
+      <div class="card uc-card reveal" data-tags="agent studio">
+        <div class="uc-card-header">
+          <div class="uc-tags">
+            <span class="pill pill-blue">Agents</span>
+            <span class="pill pill-violet">Copilot Studio</span>
+            <span class="pill pill-neutral">Operations</span>
+          </div>
+          <div class="uc-name">Autonomous monitoring and alert agent</div>
+        </div>
+        <div class="uc-card-body">
+          <div>
+            <div class="uc-section-label">What it does</div>
+            <p class="uc-desc">Runs on a schedule or trigger — monitors a data source (SharePoint list, Dataverse table, email inbox, or external API) and takes action when conditions are met. For example: when a high-priority support ticket is unassigned for over 2 hours, notify the team lead and add it to a tracking list.</p>
+          </div>
+          <div>
+            <div class="uc-section-label">What you need</div>
+            <div class="uc-reqs">
+              <div class="uc-req">Copilot Studio with autonomous agent features (preview at time of writing)</div>
+              <div class="uc-req">Power Automate for the action triggers and flows</div>
+              <div class="uc-req">Clear, well-defined trigger conditions — vague rules produce unpredictable behaviour</div>
+            </div>
+          </div>
+          <div>
+            <div class="uc-section-label">Realistic outcome</div>
+            <div class="uc-outcome">Works well for rule-based monitoring scenarios with clearly defined trigger conditions. <strong>Autonomous features are still maturing</strong> — test thoroughly before running in production. Always include a kill switch or human override.</div>
+          </div>
+        </div>
+        <div class="uc-card-footer">
+          <div class="uc-difficulty">
+            <div class="difficulty-dots">
+              <div class="difficulty-dot filled"></div><div class="difficulty-dot filled"></div><div class="difficulty-dot filled"></div><div class="difficulty-dot"></div>
+            </div>
+            <span style="font-size:12px;color:var(--fg-3)">High — requires careful design</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Excel Data Analysis -->
+      <div class="card uc-card reveal reveal-d1" data-tags="m365">
+        <div class="uc-card-header">
+          <div class="uc-tags">
+            <span class="pill pill-blue">M365 Copilot</span>
+            <span class="pill pill-neutral">Excel</span>
+          </div>
+          <div class="uc-name">Data analysis and insight extraction in Excel</div>
+        </div>
+        <div class="uc-card-body">
+          <div>
+            <div class="uc-section-label">What it does</div>
+            <p class="uc-desc">Analyses data in Excel spreadsheets, explains trends, identifies outliers, generates charts, and answers natural-language questions about your data. Useful for people who receive data they need to interpret quickly but aren't Excel power users.</p>
+          </div>
+          <div>
+            <div class="uc-section-label">What you need</div>
+            <div class="uc-reqs">
+              <div class="uc-req">M365 Copilot license</div>
+              <div class="uc-req">Excel with data in a proper table format (not merged cells, not multi-row headers)</div>
+            </div>
+          </div>
+          <div>
+            <div class="uc-section-label">Realistic outcome</div>
+            <div class="uc-outcome">Good for quick data exploration and trend spotting. <strong>Unreliable with complex multi-sheet workbooks, many-to-many data relationships, or ambiguous column names.</strong> Always validate outputs. Don't use Copilot-generated analysis in financial reporting without manual review.</div>
+          </div>
+        </div>
+        <div class="uc-card-footer">
+          <div class="uc-difficulty">
+            <div class="difficulty-dots">
+              <div class="difficulty-dot filled"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div>
+            </div>
+            <span style="font-size:12px;color:var(--fg-3)">Low — no build required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Sales / CRM Agent -->
+      <div class="card uc-card reveal" data-tags="studio agent">
+        <div class="uc-card-header">
+          <div class="uc-tags">
+            <span class="pill pill-violet">Copilot Studio</span>
+            <span class="pill pill-neutral">Sales · CRM</span>
+          </div>
+          <div class="uc-name">Sales prep and CRM update agent</div>
+        </div>
+        <div class="uc-card-body">
+          <div>
+            <div class="uc-section-label">What it does</div>
+            <p class="uc-desc">Helps sales teams prepare for customer meetings by summarising account history, recent interactions, and open opportunities from Dynamics 365 or Salesforce. After calls, helps log notes and update CRM records via Power Automate actions — reducing the manual admin burden on account managers.</p>
+          </div>
+          <div>
+            <div class="uc-section-label">What you need</div>
+            <div class="uc-reqs">
+              <div class="uc-req">Copilot Studio license</div>
+              <div class="uc-req">Dynamics 365 or Salesforce with a Power Automate connector</div>
+              <div class="uc-req">Consistent, quality CRM data — the agent surfaces what's there</div>
+            </div>
+          </div>
+          <div>
+            <div class="uc-section-label">Realistic outcome</div>
+            <div class="uc-outcome">Good adoption in sales teams where CRM admin is a pain point. Meeting prep summaries are valued highly. CRM updates via the agent work well for structured fields — less reliable for freeform notes and complex record structures.</div>
+          </div>
+        </div>
+        <div class="uc-card-footer">
+          <div class="uc-difficulty">
+            <div class="difficulty-dots">
+              <div class="difficulty-dot filled"></div><div class="difficulty-dot filled"></div><div class="difficulty-dot filled"></div><div class="difficulty-dot"></div>
+            </div>
+            <span style="font-size:12px;color:var(--fg-3)">Medium-high — CRM integration complexity</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /uc-grid -->
+  </div>
+</section>
+
+<!-- NEWSLETTER CTA -->
+<section class="cta-band" id="newsletter">
+  <div class="cta-band-bg"></div>
+  <div class="cta-band-inner reveal">
+    <div class="pill pill-blue">More use cases coming</div>
+    <h2 class="cta-title">New use cases added regularly.</h2>
+    <p class="cta-sub">Subscribe to hear when new scenarios are published.</p>
+    <form class="nl-form" style="max-width:480px;width:100%" onsubmit="return false;">
+      <input class="nl-input" type="email" placeholder="your@email.com" required>
+      <button class="nl-btn" type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-mark">AR</div>
+        <span class="footer-wordmark">AgentReady</span>
+      </div>
+      <div class="footer-tagline">Your guide to Microsoft AI, Copilot, and agents</div>
+      <p class="footer-desc">Independent education by <a href="about.html">Adam Bezance</a>. No vendor agenda — just honest, practical content for people working with Microsoft AI day to day.</p>
+    </div>
+    <div>
+      <div class="footer-nav-title">Site</div>
+      <div class="footer-nav-links">
+        <a href="index.html">Home</a>
+        <a href="learn.html">Learn</a>
+        <a href="pathways.html">Pathways</a>
+        <a href="use-cases.html">Use Cases</a>
+        <a href="resources.html">Resources</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-nl-title">Stay up to date</div>
+      <div class="footer-nl-desc">New articles and use cases, straight to your inbox. No noise.</div>
+      <form class="nl-form" onsubmit="return false;">
+        <input class="nl-input" type="email" placeholder="your@email.com" required>
+        <button class="nl-btn" type="submit" style="padding:12px 20px;font-size:14px">Go</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 AgentReady · An independent resource by <a href="about.html">Adam Bezance</a></span>
+    <span class="footer-copy">Not affiliated with or endorsed by Microsoft</span>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 30));
+  const toggle = document.getElementById('nav-toggle');
+  const links  = document.getElementById('nav-links');
+  toggle?.addEventListener('click', () => links.classList.toggle('open'));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.uc-card');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      const f = btn.dataset.filter;
+      cards.forEach(c => {
+        const tags = c.dataset.tags || '';
+        const show = f === 'all' || tags.includes(f);
+        c.style.display = show ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>

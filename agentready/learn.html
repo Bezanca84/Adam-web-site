@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn — AgentReady</title>
+<meta name="description" content="Foundational explainers covering M365 Copilot, Copilot Studio, and agents. What they are, how they work, and how to get started.">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── Article nav ───────────────────────────────────────────── */
+.article-nav {
+  background: var(--base); border-bottom: 1px solid var(--border);
+  position: sticky; top: var(--nav-h); z-index: 50;
+  padding: 0 var(--pad-x);
+}
+.article-nav-inner {
+  max-width: var(--wide); margin: 0 auto;
+  display: flex; gap: 4px; overflow-x: auto;
+  scrollbar-width: none;
+}
+.article-nav-inner::-webkit-scrollbar { display: none; }
+.art-nav-link {
+  font-size: 13px; font-weight: 600; color: var(--fg-3);
+  text-decoration: none; padding: 16px 14px; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.art-nav-link:hover { color: var(--fg-2); }
+.art-nav-link.active { color: var(--blue-lt); border-bottom-color: var(--blue); }
+
+/* ── Articles ──────────────────────────────────────────────── */
+.article {
+  padding: 80px var(--pad-x);
+  border-bottom: 1px solid var(--border);
+}
+.article:nth-child(even) { background: var(--base); }
+.article-inner { max-width: var(--content); margin: 0 auto; }
+.article-header { margin-bottom: 40px; display: flex; flex-direction: column; gap: 14px; }
+.article-label { display: flex; gap: 10px; align-items: center; }
+.article-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--blue-dim); border: 1px solid var(--blue-brd);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; color: var(--blue-lt);
+}
+.article-title {
+  font-size: clamp(26px, 3.5vw, 38px); font-weight: 800;
+  letter-spacing: -0.03em; line-height: 1.15; color: var(--fg);
+}
+.article-intro { font-size: 17px; color: var(--fg-2); line-height: 1.7; font-weight: 400; }
+
+/* Article body */
+.art-body { display: flex; flex-direction: column; gap: 32px; }
+.art-section { display: flex; flex-direction: column; gap: 14px; }
+.art-h3 {
+  font-size: 16px; font-weight: 700; color: var(--fg);
+  letter-spacing: -0.01em; padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.art-p { font-size: 16px; color: var(--fg-2); line-height: 1.7; }
+.art-p strong { color: var(--fg); font-weight: 600; }
+.art-p a { color: var(--blue-lt); text-decoration: none; }
+.art-p a:hover { text-decoration: underline; }
+
+/* Callout boxes */
+.callout {
+  padding: 20px 22px; border-radius: var(--r-lg);
+  border-left: 3px solid; display: flex; flex-direction: column; gap: 8px;
+}
+.callout-info {
+  background: var(--blue-dim); border-color: var(--blue);
+}
+.callout-warn {
+  background: rgba(255,215,0,0.06); border-color: var(--gold);
+}
+.callout-title { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.callout-info .callout-title  { color: var(--blue-lt); }
+.callout-warn .callout-title  { color: var(--gold); }
+.callout-body { font-size: 14px; color: var(--fg-2); line-height: 1.6; }
+.callout-body strong { color: var(--fg); }
+
+/* Capability grid */
+.cap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cap-item {
+  padding: 14px 16px; border-radius: var(--r-md);
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  font-size: 14px; color: var(--fg-2); line-height: 1.5;
+}
+.cap-item strong { color: var(--fg); display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.cap-item.can  { border-left: 3px solid var(--blue); }
+.cap-item.cant { border-left: 3px solid rgba(240,68,56,0.6); }
+
+/* Steps */
+.steps { display: flex; flex-direction: column; gap: 12px; }
+.step { display: flex; gap: 16px; align-items: flex-start; }
+.step-num {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  background: var(--blue-dim); border: 1px solid var(--blue-brd);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: var(--blue-lt);
+}
+.step-text { font-size: 15px; color: var(--fg-2); line-height: 1.6; padding-top: 5px; }
+.step-text strong { color: var(--fg); }
+
+/* Article CTA */
+.article-cta {
+  margin-top: 40px; padding: 24px 28px; border-radius: var(--r-lg);
+  background: var(--blue-dim); border: 1px solid var(--blue-brd);
+  display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.article-cta-text { font-size: 15px; color: var(--fg-2); line-height: 1.5; }
+.article-cta-text strong { color: var(--fg); display: block; margin-bottom: 4px; }
+
+@media (max-width: 640px) {
+  .cap-grid { grid-template-columns: 1fr; }
+  .article-cta { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-mark">AR</div>
+      <div class="nav-identity">
+        <span class="nav-name">AgentReady</span>
+        <span class="nav-sub">Microsoft AI · Copilot · Agents</span>
+      </div>
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link active" href="learn.html">Learn</a>
+      <a class="nav-link" href="pathways.html">Pathways</a>
+      <a class="nav-link" href="use-cases.html">Use Cases</a>
+      <a class="nav-link" href="resources.html">Resources</a>
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-cta" href="index.html#newsletter">Subscribe</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-inner">
+    <div class="eyebrow">Learn</div>
+    <h1 class="page-title">Foundations</h1>
+    <p class="page-desc">What M365 Copilot, Copilot Studio, and agents actually are — how they work, what you need to use them, and where they fall short. No hype.</p>
+  </div>
+</div>
+
+<!-- ARTICLE NAV -->
+<div class="article-nav">
+  <div class="article-nav-inner">
+    <a class="art-nav-link active" href="#m365-copilot">M365 Copilot</a>
+    <a class="art-nav-link" href="#copilot-studio">Copilot Studio</a>
+    <a class="art-nav-link" href="#agents">What are Agents</a>
+    <a class="art-nav-link" href="#get-started">Getting Started</a>
+  </div>
+</div>
+
+<!-- ARTICLE 1: M365 COPILOT -->
+<article class="article" id="m365-copilot">
+  <div class="article-inner">
+    <div class="article-header reveal">
+      <div class="article-label">
+        <div class="article-num">1</div>
+        <div class="eyebrow">M365 Copilot</div>
+      </div>
+      <h2 class="article-title">What is Microsoft 365 Copilot?</h2>
+      <p class="article-intro">M365 Copilot is an AI assistant embedded across your Microsoft 365 apps. It sits inside Teams, Outlook, Word, Excel, PowerPoint, and more — and it uses your organisation's data to give contextually relevant responses. Here's what that actually means in practice.</p>
+    </div>
+
+    <div class="art-body">
+      <div class="art-section reveal">
+        <div class="art-h3">How it works</div>
+        <p class="art-p">Under the hood, M365 Copilot connects a large language model (similar in capability to GPT-4) to <strong>Microsoft Graph</strong> — the data layer that sits across your tenant and knows about your emails, calendar, Teams chats, files, and meetings. When you ask Copilot a question, it retrieves relevant content from Graph and uses the LLM to generate a response.</p>
+        <p class="art-p">This means it can answer questions like "What did I miss in yesterday's meeting?" or "Summarise the key decisions in the Q3 review document" — because it has real access to your data. It doesn't just work from generic knowledge; it works from your organisational context.</p>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">Where it works</div>
+        <div class="cap-grid">
+          <div class="cap-item can"><strong>Teams</strong>Summarises meetings in real time or after the fact. Recaps what you missed, extracts action items, and can answer questions about meeting content.</div>
+          <div class="cap-item can"><strong>Outlook</strong>Drafts emails, summarises long threads, surfaces key action items, and helps you respond faster.</div>
+          <div class="cap-item can"><strong>Word</strong>Drafts documents from prompts, rewrites and improves existing content, summarises long documents.</div>
+          <div class="cap-item can"><strong>Excel</strong>Analyses data, explains formulas, surfaces trends and anomalies, generates charts and summaries.</div>
+          <div class="cap-item can"><strong>PowerPoint</strong>Creates presentations from a brief or from an existing document. Adds speaker notes and reformats slides.</div>
+          <div class="cap-item can"><strong>Microsoft 365 Chat</strong>A cross-app assistant that can reason across your emails, meetings, files, and Teams — a unified view of your work context.</div>
+        </div>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">What it does well</div>
+        <p class="art-p">Meeting summarisation in Teams is genuinely useful — particularly for long recurring meetings and calls you can't attend. The quality is consistently good when the transcript is clear. Email drafting in Outlook saves time on routine correspondence. Summarisation and document generation in Word is solid, especially for first drafts. <strong>For knowledge workers in large organisations dealing with high communication volume, the time savings are real.</strong></p>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">What it doesn't do</div>
+        <div class="callout callout-warn">
+          <div class="callout-title">Honest limitations</div>
+          <div class="callout-body">
+            <strong>It can't take actions on your behalf.</strong> Copilot can summarise, draft, and generate — but it can't send emails, book meetings, or update records without you confirming. That's what agents are for.<br><br>
+            <strong>It hallucinates.</strong> Like all LLMs, it sometimes generates plausible-sounding but incorrect information. Always review outputs, especially in Excel analysis or factual document generation.<br><br>
+            <strong>It respects your existing permissions.</strong> This is actually good news for governance — it can only surface data you already have access to. But it means it won't give everyone visibility of everything.<br><br>
+            <strong>It requires specific licensing.</strong> You need a Microsoft 365 E3 or E5 subscription plus the Microsoft 365 Copilot add-on. As of mid-2025, the add-on is $30 USD per user per month.
+          </div>
+        </div>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">What you need</div>
+        <div class="callout callout-info">
+          <div class="callout-title">Requirements</div>
+          <div class="callout-body">
+            <strong>License:</strong> Microsoft 365 E3 or E5 (or Business Standard/Premium in some configurations) plus the Microsoft 365 Copilot add-on.<br><br>
+            <strong>Admin enablement:</strong> Your IT admin needs to assign the license and enable Copilot in the admin centre. There are data access and governance settings to configure first.<br><br>
+            <strong>Data readiness:</strong> Copilot surfaces your org's data. If SharePoint permissions are chaotic or sensitive files are over-shared, Copilot will reflect that. Data hygiene matters more than people expect.
+          </div>
+        </div>
+      </div>
+
+      <div class="article-cta reveal">
+        <div class="article-cta-text">
+          <strong>Next step for IT admins</strong>
+          Learn how to enable and govern M365 Copilot in your tenant — including data access controls, sensitivity labels, and usage reporting.
+        </div>
+        <a class="btn btn-primary btn-sm" href="pathways.html#it-admin">IT Admin pathway →</a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ARTICLE 2: COPILOT STUDIO -->
+<article class="article" id="copilot-studio">
+  <div class="article-inner">
+    <div class="article-header reveal">
+      <div class="article-label">
+        <div class="article-num">2</div>
+        <div class="eyebrow">Copilot Studio</div>
+      </div>
+      <h2 class="article-title">What is Copilot Studio?</h2>
+      <p class="article-intro">Copilot Studio is Microsoft's low-code platform for building custom AI assistants and agents. It's part of Power Platform, and it gives you the tools to create conversational AI that connects to your own data, systems, and processes — without writing application code.</p>
+    </div>
+
+    <div class="art-body">
+      <div class="art-section reveal">
+        <div class="art-h3">What it is</div>
+        <p class="art-p">Where M365 Copilot is Microsoft's AI assistant for your Microsoft 365 apps, Copilot Studio is the platform you use to <strong>build your own AI assistants</strong>. You can create a bot that answers HR policy questions from your SharePoint intranet, a customer support agent for your website, or an internal IT helpdesk that creates tickets automatically. The scope is broad.</p>
+        <p class="art-p">It uses a combination of <strong>rule-based dialogue flows</strong> (you define topics and what happens when certain phrases are detected) and <strong>generative AI</strong> powered by Azure OpenAI (the agent can answer questions it hasn't been explicitly programmed for, using your configured knowledge sources). You control how much autonomy the AI has.</p>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">Two main use cases</div>
+        <div class="cap-grid">
+          <div class="cap-item can"><strong>Standalone copilots</strong>Build a purpose-built AI assistant for a specific use case: HR Q&A, IT helpdesk, customer support, onboarding guide. Deploy to Teams, SharePoint, a website, or other channels.</div>
+          <div class="cap-item can"><strong>Extending M365 Copilot</strong>Add custom topics and plugins to M365 Copilot so it can answer questions about your specific systems, trigger your business processes, or access data not in Microsoft Graph.</div>
+        </div>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">Knowledge sources</div>
+        <p class="art-p">You tell Copilot Studio where to look for answers. Options include:</p>
+        <div class="steps" style="margin-top:8px">
+          <div class="step"><div class="step-num">→</div><div class="step-text"><strong>SharePoint sites</strong> — index pages and documents from your SharePoint sites for Q&A</div></div>
+          <div class="step"><div class="step-num">→</div><div class="step-text"><strong>Uploaded files</strong> — PDFs, Word docs, and spreadsheets uploaded directly</div></div>
+          <div class="step"><div class="step-num">→</div><div class="step-text"><strong>Public websites</strong> — crawl external web pages (useful for product documentation or policy sites)</div></div>
+          <div class="step"><div class="step-num">→</div><div class="step-text"><strong>Dataverse</strong> — query structured data in your Power Platform environment</div></div>
+          <div class="step"><div class="step-num">→</div><div class="step-text"><strong>Custom connectors</strong> — call any API to pull in data from external systems</div></div>
+        </div>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">Taking actions</div>
+        <p class="art-p">Copilot Studio integrates with <strong>Power Automate</strong>, which is where it gets its ability to do things rather than just answer questions. You can trigger flows that create calendar events, update CRM records, send notifications, create support tickets, or write to any connected system. This is what separates a knowledge-base bot from a genuine agent.</p>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">What it doesn't do</div>
+        <div class="callout callout-warn">
+          <div class="callout-title">Honest limitations</div>
+          <div class="callout-body">
+            <strong>Generative answers can be imprecise.</strong> When the AI generates an answer from your knowledge source, it can misread or misinterpret content. Testing and tuning the quality of responses takes real time — don't assume it'll be great out of the box.<br><br>
+            <strong>Complex logic needs Power Automate.</strong> Copilot Studio handles conversation flow. Anything with multiple conditions, data transformations, or integration complexity needs a properly designed Power Automate flow behind it.<br><br>
+            <strong>It doesn't train a custom model.</strong> Copilot Studio retrieves and synthesises from your configured knowledge sources. It doesn't retrain the underlying LLM on your data — there is no fine-tuning here.<br><br>
+            <strong>Licensing is per-message or per-session.</strong> Usage is metered. For high-volume deployments you need to plan your message costs. Check current Microsoft pricing before building — it changes.
+          </div>
+        </div>
+      </div>
+
+      <div class="article-cta reveal">
+        <div class="article-cta-text">
+          <strong>Ready to build?</strong>
+          The developer pathway walks through creating your first Copilot Studio agent, from environment setup to Teams deployment.
+        </div>
+        <a class="btn btn-primary btn-sm" href="pathways.html#developer">Developer pathway →</a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ARTICLE 3: AGENTS -->
+<article class="article" id="agents">
+  <div class="article-inner">
+    <div class="article-header reveal">
+      <div class="article-label">
+        <div class="article-num">3</div>
+        <div class="eyebrow">Agents</div>
+      </div>
+      <h2 class="article-title">What are agents?</h2>
+      <p class="article-intro">"Agents" has become one of the most overloaded words in enterprise AI. Here's a grounded definition: an agent is an AI system that can take a sequence of actions to accomplish a goal — with minimal human direction at each step. That's a meaningful step up from a chatbot.</p>
+    </div>
+
+    <div class="art-body">
+      <div class="art-section reveal">
+        <div class="art-h3">Chatbots vs agents</div>
+        <p class="art-p">A chatbot responds to inputs. An agent pursues goals. The practical difference: a chatbot answers "what's the leave policy?" — an agent could receive a leave request, check the policy, look up the employee's remaining allowance, draft the approval email, and create the calendar block. Same underlying technology, very different design.</p>
+        <p class="art-p">Agents have access to <strong>tools</strong> — APIs, flows, databases — and they decide which tools to use, in what order, to accomplish the task. The "decision" is made by the LLM based on the instructions you give the agent and the tools you've made available to it.</p>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">Types of agents in Microsoft's world</div>
+        <div class="cap-grid">
+          <div class="cap-item can"><strong>Copilot Studio agents</strong>Built in Copilot Studio, triggered by a user message or a system event. Can take multi-step actions using Power Automate flows. Deployed to Teams, SharePoint, or web.</div>
+          <div class="cap-item can"><strong>Autonomous agents</strong>Run without a user initiating a conversation. Triggered by a schedule, a data change, or an external event. Can monitor, decide, and act on your behalf.</div>
+          <div class="cap-item can"><strong>M365 Copilot agents</strong>Extensions to M365 Copilot built in Copilot Studio or Teams Agent Builder. Give Copilot access to your specific data or the ability to trigger your processes.</div>
+          <div class="cap-item can"><strong>Multi-agent orchestration</strong>Multiple agents working together — one orchestrator delegates tasks to specialist agents. Microsoft is building this out with the Copilot Studio agent builder. Early stages.</div>
+        </div>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">What makes an agent different in practice</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Multi-step reasoning.</strong> Instead of answering one question, an agent plans a sequence of steps and executes them in order.</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Tool use.</strong> Agents can call APIs, run queries, trigger automation flows — they can interact with your systems, not just describe them.</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Background operation.</strong> Agents can run autonomously — monitoring a data source, checking conditions, and taking action when needed — without a human prompting each step.</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Context retention.</strong> Agents can hold context across a session and refer back to what's happened earlier in a task sequence.</div></div>
+        </div>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">What to watch out for</div>
+        <div class="callout callout-warn">
+          <div class="callout-title">Honest limitations</div>
+          <div class="callout-body">
+            <strong>"Autonomous" still requires careful design.</strong> Agents that act without human confirmation can cause real problems if the instructions are ambiguous, the data is unexpected, or the tool it calls has broad permissions. Design for failure, not just the happy path.<br><br>
+            <strong>The action space is what you build.</strong> An agent can only do what you've connected it to. The "intelligence" is in the reasoning and planning — the agent's actual power comes from the quality of the tools you give it.<br><br>
+            <strong>Governance matters more as autonomy increases.</strong> Know what data your agent can access, what systems it can write to, and who has oversight. This is especially important for agents that run on a schedule.<br><br>
+            <strong>The landscape is still maturing.</strong> Microsoft's agentic AI features are evolving quickly. What's possible in Copilot Studio today will look different in 12 months. Build flexibly.
+          </div>
+        </div>
+      </div>
+
+      <div class="article-cta reveal">
+        <div class="article-cta-text">
+          <strong>See agents in action</strong>
+          Browse real-world use cases — HR agent, IT helpdesk agent, and more — with what you need and what realistic outcomes look like.
+        </div>
+        <a class="btn btn-primary btn-sm" href="use-cases.html">View use cases →</a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ARTICLE 4: GETTING STARTED -->
+<article class="article" id="get-started">
+  <div class="article-inner">
+    <div class="article-header reveal">
+      <div class="article-label">
+        <div class="article-num">4</div>
+        <div class="eyebrow">Getting Started</div>
+      </div>
+      <h2 class="article-title">How to actually get started</h2>
+      <p class="article-intro">Each tool has a different entry point. Here's the practical starting point for each one — what to do on day one, depending on your role and what you're trying to achieve.</p>
+    </div>
+
+    <div class="art-body">
+      <div class="art-section reveal">
+        <div class="art-h3">Getting started with M365 Copilot</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Confirm your licensing.</strong> Check with your IT admin that you have the M365 Copilot add-on assigned. If you don't have it, you'll need to request it or check whether a trial is available.</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Start in Teams.</strong> The best first experience is meeting summarisation. Join or attend a recorded meeting and ask Copilot in the meeting recap to summarise key decisions and action items. It's immediately useful.</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Try M365 Chat (Business Chat).</strong> Open Microsoft 365 Chat and ask a work question that spans multiple contexts — "What projects am I involved in this week?" It shows the cross-app reasoning capability.</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Use it in Outlook.</strong> Open a long email thread and ask Copilot to summarise it. Then draft a reply. The friction reduction for high-volume inboxes is immediately visible.</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Don't over-prompt on day one.</strong> Copilot works best with clear, specific prompts. "Write me a document about X" produces mediocre output. "Summarise the key points from [specific document] in 5 bullet points for a senior audience" produces much better results.</div></div>
+        </div>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">Getting started with Copilot Studio</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Sign up for a free trial.</strong> Go to <strong>copilotstudio.microsoft.com</strong> and sign in with a Microsoft work account. You'll get a trial environment with enough capacity to build and test.</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Create a blank agent.</strong> Give it a name, a description, and tell it its role in the instructions field. The instructions are the most important thing to get right — think of them as the agent's job description.</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Add a knowledge source.</strong> Connect it to a SharePoint site or upload a PDF. Then test it in the built-in test panel. Ask questions that should be answerable from your content and see how it does.</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Add a simple action.</strong> Create a Power Automate flow that does something basic — send a Teams message, create a Planner task — and wire it to the agent. Now it can do things, not just answer.</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Publish to Teams.</strong> Once you're happy with the behaviour, publish it. Deploy to Teams as an app your colleagues can talk to.</div></div>
+        </div>
+      </div>
+
+      <div class="art-section reveal">
+        <div class="art-h3">Getting started with agents</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Start with the Copilot Studio templates.</strong> Microsoft provides starter templates for common agent scenarios. Pick one close to your use case and modify it rather than starting from scratch.</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Define the scope clearly.</strong> What is the agent for? What can it do? What can't it do? Write the agent instructions as if you're briefing a new employee — specific, bounded, and clear about edge cases.</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Build the tools first.</strong> The agent's capability is in the actions available to it. Identify the 2–3 things you want it to be able to do and build those Power Automate flows before worrying about conversational quality.</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Test adversarially.</strong> Give the agent inputs it shouldn't be able to handle and confirm it fails gracefully. What happens when it doesn't understand? What happens when the data it needs isn't there?</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Add a human escalation path.</strong> For any agent handling real business processes, define the point at which a human takes over. Don't automate without a safety valve.</div></div>
+        </div>
+        <div class="callout callout-info" style="margin-top:16px">
+          <div class="callout-title">Your next step</div>
+          <div class="callout-body">Not sure which tool to focus on first? The <strong>Pathways section</strong> has structured learning tracks matched to your role — IT admin, developer, or business user.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- NEWSLETTER CTA -->
+<section class="cta-band" id="newsletter">
+  <div class="cta-band-bg"></div>
+  <div class="cta-band-inner reveal">
+    <div class="pill pill-blue">Stay in the loop</div>
+    <h2 class="cta-title">Get new articles<br>when they're published.</h2>
+    <p class="cta-sub">Practical content about Microsoft AI as the platform evolves. No noise.</p>
+    <form class="nl-form" style="max-width:480px;width:100%" onsubmit="return false;">
+      <input class="nl-input" type="email" placeholder="your@email.com" required>
+      <button class="nl-btn" type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-mark">AR</div>
+        <span class="footer-wordmark">AgentReady</span>
+      </div>
+      <div class="footer-tagline">Your guide to Microsoft AI, Copilot, and agents</div>
+      <p class="footer-desc">Independent education by <a href="about.html">Adam Bezance</a>. No vendor agenda — just honest, practical content for people working with Microsoft AI day to day.</p>
+    </div>
+    <div>
+      <div class="footer-nav-title">Site</div>
+      <div class="footer-nav-links">
+        <a href="index.html">Home</a>
+        <a href="learn.html">Learn</a>
+        <a href="pathways.html">Pathways</a>
+        <a href="use-cases.html">Use Cases</a>
+        <a href="resources.html">Resources</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-nl-title">Stay up to date</div>
+      <div class="footer-nl-desc">New articles and use cases, straight to your inbox. No noise.</div>
+      <form class="nl-form" onsubmit="return false;">
+        <input class="nl-input" type="email" placeholder="your@email.com" required>
+        <button class="nl-btn" type="submit" style="padding:12px 20px;font-size:14px">Go</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 AgentReady · An independent resource by <a href="about.html">Adam Bezance</a></span>
+    <span class="footer-copy">Not affiliated with or endorsed by Microsoft</span>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 30));
+  const toggle = document.getElementById('nav-toggle');
+  const links  = document.getElementById('nav-links');
+  toggle?.addEventListener('click', () => links.classList.toggle('open'));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Highlight article nav link on scroll
+  const articles  = document.querySelectorAll('article[id]');
+  const artLinks  = document.querySelectorAll('.art-nav-link');
+  const artOffset = 120;
+  window.addEventListener('scroll', () => {
+    let current = '';
+    articles.forEach(a => { if (window.scrollY >= a.offsetTop - artOffset) current = a.id; });
+    artLinks.forEach(l => {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>

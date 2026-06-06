@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentReady — Your guide to Microsoft AI, Copilot, and agents</title>
+<meta name="description" content="AgentReady is an independent education resource covering M365 Copilot, Copilot Studio, and agents. Honest, practical content with no vendor agenda.">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── Hero ──────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: calc(var(--nav-h) + 80px) var(--pad-x) 96px;
+  position: relative; overflow: hidden;
+  background: var(--canvas);
+}
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 65% 55% at 65% 25%, rgba(29,111,232,0.20) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 65% at 15% 80%, rgba(80,230,255,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 50% at 85% 70%, rgba(123,94,166,0.08) 0%, transparent 50%);
+}
+.hero-grid-overlay {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.018;
+  background-image:
+    linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: var(--wide); margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+}
+.hero-content { display: flex; flex-direction: column; gap: 24px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 14px; border-radius: var(--r-full);
+  background: var(--blue-dim); color: var(--blue-lt);
+  border: 1px solid var(--blue-brd);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  width: fit-content;
+}
+.hero-title {
+  font-size: clamp(48px, 6vw, 82px); font-weight: 800;
+  letter-spacing: -0.04em; line-height: 0.97; color: var(--fg);
+}
+.hero-title em { font-style: normal; color: var(--blue); }
+.hero-sub { font-size: clamp(16px, 1.8vw, 18px); color: var(--fg-2); line-height: 1.7; max-width: 460px; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-stats {
+  display: flex; gap: 36px; flex-wrap: wrap;
+  padding-top: 32px; border-top: 1px solid var(--border);
+}
+.stat-num   { font-size: 34px; font-weight: 800; letter-spacing: -0.04em; color: var(--blue); }
+.stat-label { font-size: 11px; color: var(--fg-3); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+
+/* Hero feature cards */
+.hero-cards { display: flex; flex-direction: column; gap: 12px; }
+.hero-card {
+  padding: 20px 22px; display: flex; gap: 16px; align-items: flex-start;
+  text-decoration: none; cursor: pointer;
+}
+.hc-icon {
+  width: 44px; height: 44px; border-radius: var(--r-md);
+  background: var(--blue-dim); border: 1px solid var(--blue-brd);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.hc-name { font-size: 15px; font-weight: 700; color: var(--fg); letter-spacing: -0.01em; margin-bottom: 4px; }
+.hc-desc { font-size: 13px; color: var(--fg-2); line-height: 1.5; }
+
+/* ── Intro ─────────────────────────────────────────────────── */
+.intro-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+}
+.intro-body { font-size: 17px; color: var(--fg-2); line-height: 1.7; margin-bottom: 16px; }
+.principles { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.principle {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 16px; border-radius: var(--r-md);
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+}
+.p-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 5px; }
+.p-text { font-size: 14px; color: var(--fg-2); line-height: 1.5; }
+.p-text strong { color: var(--fg); font-weight: 600; }
+
+/* ── Featured content ──────────────────────────────────────── */
+.featured-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 20px; }
+.feat-card { padding: 24px; display: flex; flex-direction: column; gap: 12px; text-decoration: none; }
+.feat-card.large { padding: 28px; }
+.feat-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+.feat-tag.learn   { color: var(--blue-lt); }
+.feat-tag.pathway { color: var(--violet); }
+.feat-tag.usecase { color: var(--green); }
+.feat-title    { font-size: 17px; font-weight: 700; color: var(--fg); line-height: 1.35; letter-spacing: -0.02em; }
+.feat-title-sm { font-size: 15px; font-weight: 700; color: var(--fg); line-height: 1.3;  letter-spacing: -0.015em; }
+.feat-excerpt  { font-size: 14px; color: var(--fg-2); line-height: 1.55; }
+.feat-excerpt-sm { font-size: 13px; color: var(--fg-2); line-height: 1.5; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.feat-meta     { font-size: 12px; color: var(--fg-3); margin-top: auto; }
+
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-cards { display: none; }
+  .intro-grid { grid-template-columns: 1fr; gap: 40px; }
+  .featured-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .hero { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 64px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-mark">AR</div>
+      <div class="nav-identity">
+        <span class="nav-name">AgentReady</span>
+        <span class="nav-sub">Microsoft AI · Copilot · Agents</span>
+      </div>
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a class="nav-link active" href="index.html">Home</a>
+      <a class="nav-link" href="learn.html">Learn</a>
+      <a class="nav-link" href="pathways.html">Pathways</a>
+      <a class="nav-link" href="use-cases.html">Use Cases</a>
+      <a class="nav-link" href="resources.html">Resources</a>
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-cta" href="#newsletter">Subscribe</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-inner">
+    <div class="hero-content reveal">
+      <div class="hero-badge">Independent · No vendor agenda · Practitioner-written</div>
+      <h1 class="hero-title">Your guide to<br><em>Microsoft AI,</em><br>Copilot &amp; agents.</h1>
+      <p class="hero-sub">AgentReady cuts through the noise. Honest, practical explanations of M365 Copilot, Copilot Studio, and agents — written by someone who builds with these tools every day.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="learn.html">Start learning →</a>
+        <a class="btn btn-secondary" href="pathways.html">Find your path</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">Learning tracks</div>
+        </div>
+        <div>
+          <div class="stat-num">6+</div>
+          <div class="stat-label">Use cases</div>
+        </div>
+        <div>
+          <div class="stat-num">Free</div>
+          <div class="stat-label">Always open</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-cards reveal reveal-d1">
+      <a class="card hero-card" href="learn.html">
+        <div class="hc-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#7BB3FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="hc-name">Learn</div>
+          <div class="hc-desc">Plain-English explainers covering what M365 Copilot, Copilot Studio, and agents actually are — including where they fall short.</div>
+        </div>
+      </a>
+      <a class="card hero-card" href="pathways.html">
+        <div class="hc-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#7BB3FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="hc-name">Pathways</div>
+          <div class="hc-desc">Structured learning tracks for IT admins, developers, and business users. Know exactly where to start and what to do next.</div>
+        </div>
+      </a>
+      <a class="card hero-card" href="use-cases.html">
+        <div class="hc-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#7BB3FF" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="#7BB3FF" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="#7BB3FF" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="#7BB3FF" stroke-width="2"/></svg>
+        </div>
+        <div>
+          <div class="hc-name">Use Cases</div>
+          <div class="hc-desc">Real-world scenarios showing what to build, what you need, and what realistic outcomes look like in practice.</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IS AGENTREADY -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="intro-grid">
+      <div class="reveal">
+        <div class="eyebrow">What is AgentReady</div>
+        <h2 class="section-title" style="margin-top:12px;margin-bottom:20px">No hype. Just what you actually need to know.</h2>
+        <p class="intro-body">Microsoft AI is moving fast and the marketing is loud. AgentReady is an independent resource that explains what these tools are, how they work, what they cost, and where they fall short. Written by a practitioner, for practitioners.</p>
+        <p class="intro-body">Whether you're an IT admin making sense of what Copilot means for your tenant, a developer building your first agent in Copilot Studio, or a business user trying to get real value from an M365 license — there's a path here for you.</p>
+        <a class="btn btn-secondary" style="margin-top:8px" href="about.html">About the author →</a>
+      </div>
+      <div class="principles reveal reveal-d1">
+        <div class="principle">
+          <div class="p-dot"></div>
+          <div class="p-text"><strong>Honest about limitations.</strong> Every tool has constraints. You'll find them here, not buried in small print or glossed over in enthusiasm.</div>
+        </div>
+        <div class="principle">
+          <div class="p-dot"></div>
+          <div class="p-text"><strong>Practitioner-written.</strong> This comes from someone who builds these solutions day to day — not from a vendor briefing or a press release.</div>
+        </div>
+        <div class="principle">
+          <div class="p-dot"></div>
+          <div class="p-text"><strong>Plain English.</strong> No jargon for its own sake. If something needs explaining, it gets explained from first principles.</div>
+        </div>
+        <div class="principle">
+          <div class="p-dot"></div>
+          <div class="p-text"><strong>Kept current.</strong> The Microsoft AI landscape changes quickly. Content is updated when things move on.</div>
+        </div>
+        <div class="principle">
+          <div class="p-dot"></div>
+          <div class="p-text"><strong>Free and open.</strong> No paywall, no login, no premium tier. Everything is accessible to everyone.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED CONTENT -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="eyebrow">Start here</div>
+      <h2 class="section-title">Featured content</h2>
+      <p class="section-sub">Key articles, pathways, and use cases to get you oriented quickly.</p>
+    </div>
+    <div class="featured-grid">
+      <a class="card feat-card large reveal" href="learn.html#m365-copilot">
+        <div class="feat-tag learn">Learn · M365 Copilot</div>
+        <div class="feat-title">What is M365 Copilot, really? A no-nonsense explainer.</div>
+        <div class="feat-excerpt">M365 Copilot is an AI assistant embedded across your Microsoft 365 apps — Teams, Outlook, Word, Excel, and more. But understanding what it actually does (and doesn't do) is key before you try to use it or roll it out to your organisation.</div>
+        <div class="feat-meta">Learn · ~8 min read</div>
+      </a>
+      <a class="card feat-card reveal reveal-d1" href="pathways.html#it-admin">
+        <div class="feat-tag pathway">Pathway · IT Admin</div>
+        <div class="feat-title-sm">IT Admin learning track</div>
+        <div class="feat-excerpt-sm">Enable, configure, and govern Microsoft AI across your tenant with confidence.</div>
+        <div class="feat-meta">5 steps</div>
+      </a>
+      <a class="card feat-card reveal reveal-d2" href="use-cases.html#meeting-summary">
+        <div class="feat-tag usecase">Use Case</div>
+        <div class="feat-title-sm">Meeting summarisation with M365 Copilot</div>
+        <div class="feat-excerpt-sm">Automatically recap Teams meetings, capture actions, and share summaries — no manual note-taking required.</div>
+        <div class="feat-meta">Use Case · M365 Copilot</div>
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:40px" class="reveal">
+      <a class="btn btn-secondary" href="learn.html">Browse all articles →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS OVERVIEW -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="section-header centered reveal">
+      <div class="eyebrow">The Microsoft AI toolkit</div>
+      <h2 class="section-title">Three tools. Very different purposes.</h2>
+      <p class="section-sub">M365 Copilot, Copilot Studio, and agents are often talked about interchangeably. They're not the same thing. Here's the short version.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px" class="tools-grid">
+      <div class="card reveal" style="padding:28px;display:flex;flex-direction:column;gap:16px">
+        <div class="pill pill-blue" style="width:fit-content">M365 Copilot</div>
+        <h3 style="font-size:18px;font-weight:700;color:var(--fg);letter-spacing:-0.02em;line-height:1.3">AI embedded in your Microsoft 365 apps</h3>
+        <p style="font-size:14px;color:var(--fg-2);line-height:1.6">Works inside Teams, Outlook, Word, Excel, and PowerPoint. Uses your organisation's data from Microsoft Graph. Requires a paid Copilot add-on license. It assists — it doesn't take actions.</p>
+        <a href="learn.html#m365-copilot" style="font-size:13px;color:var(--blue-lt);text-decoration:none;font-weight:600;margin-top:auto">Learn more →</a>
+      </div>
+      <div class="card reveal reveal-d1" style="padding:28px;display:flex;flex-direction:column;gap:16px">
+        <div class="pill pill-violet" style="width:fit-content">Copilot Studio</div>
+        <h3 style="font-size:18px;font-weight:700;color:var(--fg);letter-spacing:-0.02em;line-height:1.3">Build your own AI assistants</h3>
+        <p style="font-size:14px;color:var(--fg-2);line-height:1.6">A low-code platform for creating custom agents and chatbots. Part of Power Platform. Connects to your own data sources — SharePoint, websites, APIs. Deploy to Teams, web, or SharePoint. Can extend M365 Copilot.</p>
+        <a href="learn.html#copilot-studio" style="font-size:13px;color:var(--violet);text-decoration:none;font-weight:600;margin-top:auto">Learn more →</a>
+      </div>
+      <div class="card reveal reveal-d2" style="padding:28px;display:flex;flex-direction:column;gap:16px">
+        <div class="pill pill-green" style="width:fit-content">Agents</div>
+        <h3 style="font-size:18px;font-weight:700;color:var(--fg);letter-spacing:-0.02em;line-height:1.3">AI that takes actions, not just answers</h3>
+        <p style="font-size:14px;color:var(--fg-2);line-height:1.6">Agents have goals and tools — they can do things, not just respond. They can trigger flows, query databases, and run multi-step tasks. Built in Copilot Studio. Can run autonomously on a schedule or trigger.</p>
+        <a href="learn.html#agents" style="font-size:13px;color:var(--green);text-decoration:none;font-weight:600;margin-top:auto">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER CTA -->
+<section class="cta-band" id="newsletter">
+  <div class="cta-band-bg"></div>
+  <div class="cta-band-inner reveal">
+    <div class="pill pill-blue">Stay in the loop</div>
+    <h2 class="cta-title">New articles, use cases,<br>and resources — in your inbox.</h2>
+    <p class="cta-sub">No noise. Practical content about Microsoft AI as it evolves. Unsubscribe any time.</p>
+    <form class="nl-form" style="max-width:480px;width:100%" onsubmit="return false;">
+      <input class="nl-input" type="email" placeholder="your@email.com" required>
+      <button class="nl-btn" type="submit">Subscribe</button>
+    </form>
+    <p style="font-size:12px;color:var(--fg-3)">No spam. No selling your details. Just content.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-mark">AR</div>
+        <span class="footer-wordmark">AgentReady</span>
+      </div>
+      <div class="footer-tagline">Your guide to Microsoft AI, Copilot, and agents</div>
+      <p class="footer-desc">Independent education by <a href="about.html">Adam Bezance</a>. No vendor agenda — just honest, practical content for people working with Microsoft AI day to day.</p>
+    </div>
+    <div>
+      <div class="footer-nav-title">Site</div>
+      <div class="footer-nav-links">
+        <a href="index.html">Home</a>
+        <a href="learn.html">Learn</a>
+        <a href="pathways.html">Pathways</a>
+        <a href="use-cases.html">Use Cases</a>
+        <a href="resources.html">Resources</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-nl-title">Stay up to date</div>
+      <div class="footer-nl-desc">New articles and use cases, straight to your inbox. No noise.</div>
+      <form class="nl-form" onsubmit="return false;">
+        <input class="nl-input" type="email" placeholder="your@email.com" required>
+        <button class="nl-btn" type="submit" style="padding:12px 20px;font-size:14px">Go</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 AgentReady · An independent resource by <a href="about.html">Adam Bezance</a></span>
+    <span class="footer-copy">Not affiliated with or endorsed by Microsoft</span>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll glass
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 30));
+
+  // Mobile nav
+  const toggle = document.getElementById('nav-toggle');
+  const links  = document.getElementById('nav-links');
+  toggle?.addEventListener('click', () => links.classList.toggle('open'));
+
+  // Scroll reveal
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, { threshold: 0.10 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

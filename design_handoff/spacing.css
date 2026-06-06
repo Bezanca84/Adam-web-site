@@ -1,0 +1,51 @@
+/* ============================================================
+   ADAM BEZANCE — AGENT ARCHITECT
+   Spacing & Layout Tokens
+   ============================================================ */
+
+:root {
+  /* ── Base Scale (4px grid) ─────────────────────────────── */
+  --space-0:   0px;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-32: 128px;
+  --space-40: 160px;
+  --space-48: 192px;
+
+  /* ── Semantic Spacing ─────────────────────────────────── */
+  --space-section:     96px;    /* Between major page sections */
+  --space-component:   48px;    /* Between components in a section */
+  --space-element:     24px;    /* Between elements in a component */
+  --space-item:        12px;    /* Between items in a list/group */
+  --space-inline:       8px;    /* Horizontal gap between inline items */
+
+  /* ── Border Radius ─────────────────────────────────────── */
+  --radius-xs:   3px;
+  --radius-sm:   6px;
+  --radius-md:  10px;
+  --radius-lg:  14px;
+  --radius-xl:  20px;
+  --radius-2xl: 28px;
+  --radius-full: 9999px;
+
+  /* ── Layout Widths ─────────────────────────────────────── */
+  --layout-max:     1400px;   /* Site max-width */
+  --layout-wide:    1200px;   /* Wide content / full-bleed grids */
+  --layout-content:  960px;   /* Standard content column */
+  --layout-narrow:   720px;   /* Article / focused reading */
+  --layout-compact:  560px;   /* Forms, dialogs */
+
+  /* ── Nav ──────────────────────────────────────────────── */
+  --nav-height:        68px;
+  --nav-padding-x:     40px;
+}

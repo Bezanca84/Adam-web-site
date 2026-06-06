@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources — AgentReady</title>
+<meta name="description" content="AgentReady resources — coming soon. Templates, checklists, and reference guides for M365 Copilot and Copilot Studio.">
+<link rel="stylesheet" href="styles.css">
+<style>
+.coming-soon {
+  min-height: calc(100vh - var(--nav-h));
+  display: flex; align-items: center; justify-content: center;
+  padding: calc(var(--nav-h) + 40px) var(--pad-x) 80px;
+  position: relative; overflow: hidden;
+}
+.coming-soon-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 40%, rgba(29,111,232,0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 20% 80%, rgba(80,230,255,0.05) 0%, transparent 55%);
+}
+.coming-soon-inner {
+  position: relative; z-index: 1;
+  max-width: 640px; width: 100%; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 24px;
+}
+.coming-icon {
+  width: 72px; height: 72px; border-radius: var(--r-xl);
+  background: var(--blue-dim); border: 1px solid var(--blue-brd);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 32px rgba(29,111,232,0.20);
+}
+.coming-title {
+  font-size: clamp(36px, 5vw, 56px); font-weight: 800;
+  letter-spacing: -0.04em; line-height: 1.05; color: var(--fg);
+}
+.coming-sub {
+  font-size: 18px; color: var(--fg-2); line-height: 1.65; max-width: 520px;
+}
+.coming-what {
+  width: 100%; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--r-lg);
+  padding: 24px 28px; text-align: left;
+  box-shadow: var(--glow-card);
+}
+.coming-what-title {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.10em;
+  text-transform: uppercase; color: var(--fg-3); margin-bottom: 16px;
+}
+.coming-list { display: flex; flex-direction: column; gap: 10px; }
+.coming-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  font-size: 14px; color: var(--fg-2); line-height: 1.5;
+}
+.coming-item-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--blue); flex-shrink: 0; margin-top: 5px;
+}
+.coming-item strong { color: var(--fg); }
+.nl-note { font-size: 12px; color: var(--fg-3); }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-mark">AR</div>
+      <div class="nav-identity">
+        <span class="nav-name">AgentReady</span>
+        <span class="nav-sub">Microsoft AI · Copilot · Agents</span>
+      </div>
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="learn.html">Learn</a>
+      <a class="nav-link" href="pathways.html">Pathways</a>
+      <a class="nav-link" href="use-cases.html">Use Cases</a>
+      <a class="nav-link active" href="resources.html">Resources</a>
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-cta" href="index.html#newsletter">Subscribe</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- COMING SOON -->
+<section class="coming-soon">
+  <div class="coming-soon-bg"></div>
+  <div class="coming-soon-inner reveal">
+    <div class="coming-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="#7BB3FF" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    <div class="pill pill-gold">Coming soon</div>
+    <h1 class="coming-title">Resources are on the way.</h1>
+    <p class="coming-sub">Templates, checklists, and reference guides to speed up your work with Microsoft AI. Practical, reusable, and free — like everything else on AgentReady.</p>
+
+    <div class="coming-what">
+      <div class="coming-what-title">What's planned</div>
+      <div class="coming-list">
+        <div class="coming-item">
+          <div class="coming-item-dot"></div>
+          <div><strong>Copilot Studio agent design template</strong> — a structured brief for designing agents before you build them, covering scope, knowledge sources, actions, and failure handling.</div>
+        </div>
+        <div class="coming-item">
+          <div class="coming-item-dot"></div>
+          <div><strong>M365 Copilot governance checklist</strong> — the pre-deployment checks your IT team should run before rolling out Copilot broadly, covering data access, DLP, and licensing.</div>
+        </div>
+        <div class="coming-item">
+          <div class="coming-item-dot"></div>
+          <div><strong>Prompt library</strong> — a curated set of tested, effective prompts for M365 Copilot across Teams, Outlook, Word, Excel, and M365 Chat.</div>
+        </div>
+        <div class="coming-item">
+          <div class="coming-item-dot"></div>
+          <div><strong>Agent testing worksheet</strong> — a structured approach to testing Copilot Studio agents before deployment, including adversarial test cases and escalation testing.</div>
+        </div>
+        <div class="coming-item">
+          <div class="coming-item-dot"></div>
+          <div><strong>Use case scoring matrix</strong> — evaluate whether a proposed use case is a good fit for M365 Copilot, Copilot Studio, or an agent, based on complexity, data needs, and action requirements.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:12px">
+      <p style="font-size:15px;color:var(--fg-2);font-weight:500">Get notified when resources are published:</p>
+      <form class="nl-form" style="max-width:440px;width:100%" onsubmit="return false;">
+        <input class="nl-input" type="email" placeholder="your@email.com" required>
+        <button class="nl-btn" type="submit">Notify me</button>
+      </form>
+      <p class="nl-note">No spam. You'll only hear when new resources drop.</p>
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+      <a class="btn btn-secondary btn-sm" href="learn.html">Browse Learn →</a>
+      <a class="btn btn-secondary btn-sm" href="use-cases.html">View Use Cases →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-mark">AR</div>
+        <span class="footer-wordmark">AgentReady</span>
+      </div>
+      <div class="footer-tagline">Your guide to Microsoft AI, Copilot, and agents</div>
+      <p class="footer-desc">Independent education by <a href="about.html">Adam Bezance</a>. No vendor agenda — just honest, practical content for people working with Microsoft AI day to day.</p>
+    </div>
+    <div>
+      <div class="footer-nav-title">Site</div>
+      <div class="footer-nav-links">
+        <a href="index.html">Home</a>
+        <a href="learn.html">Learn</a>
+        <a href="pathways.html">Pathways</a>
+        <a href="use-cases.html">Use Cases</a>
+        <a href="resources.html">Resources</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-nl-title">Stay up to date</div>
+      <div class="footer-nl-desc">New articles, use cases, and resources — straight to your inbox.</div>
+      <form class="nl-form" onsubmit="return false;">
+        <input class="nl-input" type="email" placeholder="your@email.com" required>
+        <button class="nl-btn" type="submit" style="padding:12px 20px;font-size:14px">Go</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 AgentReady · An independent resource by <a href="about.html">Adam Bezance</a></span>
+    <span class="footer-copy">Not affiliated with or endorsed by Microsoft</span>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 30));
+  const toggle = document.getElementById('nav-toggle');
+  const links  = document.getElementById('nav-links');
+  toggle?.addEventListener('click', () => links.classList.toggle('open'));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, { threshold: 0.10 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+/* ============================================================
+   ADAM BEZANCE — AGENT ARCHITECT
+   Color Tokens
+   ============================================================ */
+
+:root {
+  /* ── Brand Palette ─────────────────────────────────────── */
+  --color-brand-blue:    #0078D4;   /* Microsoft Blue */
+  --color-brand-purple:  #7B5EA6;   /* Power Platform Purple */
+  --color-brand-magenta: #C239B3;   /* Power Apps / Copilot Magenta */
+  --color-brand-cyan:    #50E6FF;   /* Copilot Cyan */
+
+  /* ── Background Scale (dark-first) ─────────────────────── */
+  --color-bg-canvas:   #070B18;    /* Page canvas — deepest */
+  --color-bg-base:     #0C1120;    /* Section base */
+  --color-bg-surface:  #131928;    /* Card surfaces */
+  --color-bg-elevated: #1A2237;    /* Elevated elements, tooltips */
+  --color-bg-overlay:  #212B42;    /* Dropdowns, modals */
+
+  /* ── Foreground Scale ───────────────────────────────────── */
+  --color-fg-primary:   #EDF1FF;   /* Main body text */
+  --color-fg-secondary: #8B96B8;   /* Subdued / metadata */
+  --color-fg-muted:     #4A5578;   /* Disabled-adjacent, placeholder */
+  --color-fg-disabled:  #2C3450;   /* True disabled */
+  --color-fg-inverse:   #070B18;   /* Text on light surfaces */
+
+  /* ── Border ─────────────────────────────────────────────── */
+  --color-border-subtle:  rgba(255, 255, 255, 0.05);
+  --color-border-default: rgba(255, 255, 255, 0.09);
+  --color-border-strong:  rgba(255, 255, 255, 0.18);
+  --color-border-brand:   rgba(0, 120, 212, 0.45);
+  --color-border-glow:    rgba(80, 230, 255, 0.35);
+
+  /* ── Semantic ────────────────────────────────────────────── */
+  --color-success:      #00B7A8;
+  --color-success-bg:   rgba(0, 183, 168, 0.10);
+  --color-success-border: rgba(0, 183, 168, 0.25);
+
+  --color-warning:      #FFB900;
+  --color-warning-bg:   rgba(255, 185, 0, 0.10);
+  --color-warning-border: rgba(255, 185, 0, 0.25);
+
+  --color-error:        #F04438;
+  --color-error-bg:     rgba(240, 68, 56, 0.10);
+  --color-error-border: rgba(240, 68, 56, 0.25);
+
+  --color-info:         #50E6FF;
+  --color-info-bg:      rgba(80, 230, 255, 0.08);
+  --color-info-border:  rgba(80, 230, 255, 0.25);
+
+  /* ── MVP / Achievement ───────────────────────────────────── */
+  --color-mvp-gold:     #FFD700;
+  --color-mvp-gold-bg:  rgba(255, 215, 0, 0.10);
+
+  /* ── Gradients ───────────────────────────────────────────── */
+  --gradient-brand:    linear-gradient(135deg, #0078D4 0%, #7B5EA6 55%, #C239B3 100%);
+  --gradient-copilot:  linear-gradient(135deg, #50E6FF 0%, #0078D4 38%, #7B5EA6 72%, #C239B3 100%);
+  --gradient-hero-bg:  radial-gradient(ellipse 80% 60% at 60% 30%, rgba(0,120,212,0.18) 0%, transparent 60%),
+                       radial-gradient(ellipse 60% 80% at 20% 80%, rgba(123,94,166,0.15) 0%, transparent 55%),
+                       radial-gradient(ellipse 50% 60% at 80% 70%, rgba(194,57,179,0.10) 0%, transparent 50%);
+  --gradient-subtle:   linear-gradient(135deg, rgba(0,120,212,0.10) 0%, rgba(123,94,166,0.10) 100%);
+  --gradient-surface:  linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  --gradient-text:     linear-gradient(135deg, #50E6FF 0%, #0078D4 35%, #7B5EA6 70%, #C239B3 100%);
+}

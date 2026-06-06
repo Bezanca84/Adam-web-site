@@ -1,0 +1,582 @@
+<!-- @dsCard group="Website" viewport="1280x800" subtitle="Full homepage — Obsidian & Electric Blue · bold type" name="Homepage" -->
+<!-- @startingPoint section="Website" subtitle="Adam Bezance personal website homepage" viewport="1280x900" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adam Bezance — Agent Architect</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+/* ── Obsidian & Electric Blue palette overrides ── */
+:root {
+  --ob-canvas:   #050508;
+  --ob-base:     #0A0A12;
+  --ob-surface:  #0F0F18;
+  --ob-elevated: #161625;
+  --ob-blue:     #1D6FE8;
+  --ob-blue-lt:  #7BB3FF;
+  --ob-blue-dim: rgba(29,111,232,0.14);
+  --ob-blue-brd: rgba(29,111,232,0.32);
+  --ob-border:   rgba(255,255,255,0.06);
+  --ob-border-md:rgba(255,255,255,0.10);
+  --ob-border-st:rgba(255,255,255,0.16);
+  --ob-fg:       #FFFFFF;
+  --ob-fg-2:     #7A7A96;
+  --ob-fg-3:     #3E3E58;
+  --ob-glow:     0 4px 28px rgba(29,111,232,0.50);
+  --ob-glow-card:0 0 0 1px rgba(255,255,255,0.05), 0 8px 28px rgba(0,0,0,0.50);
+  --ob-glow-card-hover: 0 0 0 1px rgba(29,111,232,0.35), 0 12px 36px rgba(0,0,0,0.55), 0 0 20px rgba(29,111,232,0.22);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--ob-canvas);
+  color: var(--ob-fg);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── Nav ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-height);
+  display: flex; align-items: center;
+  padding: 0 var(--nav-padding-x);
+  transition: all var(--transition-base);
+}
+.nav.scrolled {
+  background: rgba(5,5,8,0.90);
+  backdrop-filter: var(--blur-md);
+  -webkit-backdrop-filter: var(--blur-md);
+  border-bottom: 1px solid var(--ob-border);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; margin-right: auto; }
+.nav-mark {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--ob-blue);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: #fff; letter-spacing: -0.5px;
+  flex-shrink: 0; box-shadow: var(--ob-glow);
+}
+.nav-identity { display: flex; flex-direction: column; gap: 1px; }
+.nav-name  { font-size: 14px; font-weight: 700; color: var(--ob-fg); letter-spacing: -0.01em; }
+.nav-title { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ob-fg-3); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-link  { font-size: 14px; font-weight: 500; color: var(--ob-fg-2); text-decoration: none; transition: color var(--transition-fast); }
+.nav-link:hover { color: var(--ob-fg); }
+.nav-cta {
+  font-size: 13px; font-weight: 700; padding: 8px 20px;
+  border-radius: var(--radius-md); background: var(--ob-blue);
+  color: #fff; text-decoration: none; box-shadow: var(--ob-glow);
+  transition: all var(--transition-base); letter-spacing: -0.01em;
+}
+.nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* ── Hero ── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: calc(var(--nav-height) + 80px) var(--nav-padding-x) 100px;
+  position: relative; overflow: hidden;
+  background: var(--ob-canvas);
+}
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 65% 55% at 65% 25%, rgba(29,111,232,0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 65% at 15% 80%, rgba(29,111,232,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 50% at 85% 70%, rgba(100,150,255,0.08) 0%, transparent 50%);
+}
+.hero-grid {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.018;
+  background-image:
+    linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: 1000px;
+  width: 100%; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 26px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px; border-radius: 9999px;
+  background: rgba(255,215,0,0.08); color: #FFD700;
+  border: 1px solid rgba(255,215,0,0.22);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase;
+}
+.hero-title {
+  font-size: clamp(56px, 7.5vw, 96px);
+  font-weight: 800;
+  line-height: 0.97;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  max-width: 900px;
+}
+.hero-sub {
+  font-size: clamp(16px, 1.8vw, 19px);
+  color: var(--ob-fg-2);
+  max-width: 540px;
+  line-height: 1.65;
+  font-weight: 400;
+}
+.hero-pills { display: flex; gap: 9px; flex-wrap: wrap; justify-content: center; }
+.hero-pill {
+  padding: 5px 14px; border-radius: 9999px;
+  font-size: 12px; font-weight: 600; border: 1px solid;
+  letter-spacing: 0.02em;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: var(--radius-md);
+  background: var(--ob-blue); color: #fff;
+  font-size: 16px; font-weight: 700; text-decoration: none;
+  box-shadow: var(--ob-glow); transition: all var(--transition-base);
+  border: none; cursor: pointer; letter-spacing: -0.01em;
+}
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: var(--radius-md);
+  background: rgba(255,255,255,0.04); color: var(--ob-fg);
+  font-size: 16px; font-weight: 600; text-decoration: none;
+  border: 1px solid var(--ob-border-st); transition: all var(--transition-base);
+  cursor: pointer; letter-spacing: -0.01em;
+}
+.btn-secondary:hover { border-color: var(--ob-blue-brd); transform: translateY(-1px); }
+.hero-stats {
+  display: flex; gap: 48px; flex-wrap: wrap; justify-content: center;
+  margin-top: 8px; padding-top: 36px;
+  border-top: 1px solid var(--ob-border); width: 100%;
+}
+.hero-stat { text-align: center; }
+.hero-stat-num {
+  font-size: 38px; font-weight: 800; letter-spacing: -0.04em;
+  color: var(--ob-blue);
+}
+.hero-stat-label {
+  font-size: 11px; color: var(--ob-fg-3); font-weight: 600;
+  margin-top: 3px; letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+/* ── Sections ── */
+.section     { padding: var(--space-section) var(--nav-padding-x); }
+.section-alt { background: var(--ob-base); }
+.section-inner  { max-width: var(--layout-wide); margin: 0 auto; }
+.section-header { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-12); }
+.section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ob-blue); }
+.section-title   { font-size: clamp(32px, 3.5vw, 48px); font-weight: 800; letter-spacing: -0.03em; color: var(--ob-fg); }
+.section-sub     { font-size: 17px; color: var(--ob-fg-2); max-width: 520px; line-height: 1.6; }
+
+/* ── About ── */
+.about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 72px; align-items: center; }
+.about-photo-wrap { position: relative; }
+.about-photo {
+  width: 100%; aspect-ratio: 3/4; border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, rgba(29,111,232,0.12) 0%, rgba(29,111,232,0.04) 100%);
+  border: 1px solid var(--ob-blue-brd);
+  box-shadow: 0 0 32px rgba(29,111,232,0.25), var(--ob-glow-card);
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.about-photo-placeholder {
+  font-size: 80px; font-weight: 800; letter-spacing: -0.05em;
+  color: var(--ob-blue); opacity: 0.25;
+}
+.about-photo-badge {
+  position: absolute; bottom: -14px; right: -14px;
+  background: var(--ob-elevated);
+  border: 1px solid var(--ob-border-st);
+  border-radius: var(--radius-lg); padding: 14px 18px;
+  display: flex; flex-direction: column; gap: 2px;
+  box-shadow: var(--shadow-lg);
+}
+.about-badge-num   { font-size: 26px; font-weight: 800; color: var(--ob-blue); letter-spacing: -0.04em; }
+.about-badge-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ob-fg-3); }
+.about-content { display: flex; flex-direction: column; gap: 20px; }
+.about-bio { font-size: 17px; color: var(--ob-fg-2); line-height: 1.7; }
+.about-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.about-tag {
+  padding: 5px 14px; border-radius: 9999px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.03em; border: 1px solid;
+}
+
+/* ── Cards ── */
+.blog-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 20px; }
+.card {
+  background: var(--ob-surface);
+  border: 1px solid var(--ob-border);
+  border-radius: var(--radius-lg); padding: 22px;
+  display: flex; flex-direction: column; gap: 12px;
+  cursor: pointer; text-decoration: none;
+  transition: all var(--transition-base);
+  box-shadow: var(--ob-glow-card);
+}
+.card:hover {
+  border-color: var(--ob-blue-brd);
+  transform: translateY(-3px);
+  box-shadow: var(--ob-glow-card-hover);
+}
+.card-cat {
+  display: inline-flex; align-items: center; padding: 3px 10px;
+  border-radius: 9999px; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.07em; text-transform: uppercase; border: 1px solid; width: fit-content;
+  background: var(--ob-blue-dim); color: var(--ob-blue-lt); border-color: var(--ob-blue-brd);
+}
+.card-title    { font-size: 18px; font-weight: 700; color: var(--ob-fg); line-height: 1.3; letter-spacing: -0.02em; }
+.card-title-sm { font-size: 16px; font-weight: 700; color: var(--ob-fg); line-height: 1.3; letter-spacing: -0.015em; }
+.card-excerpt    { font-size: 14px; color: var(--ob-fg-2); line-height: 1.55; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+.card-excerpt-sm { font-size: 13px; color: var(--ob-fg-2); line-height: 1.5;  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.card-meta { font-size: 12px; color: var(--ob-fg-3); margin-top: auto; }
+
+/* ── Certifications ── */
+.certs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.cert-card {
+  background: var(--ob-surface); border: 1px solid var(--ob-border);
+  border-radius: var(--radius-lg); padding: 28px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  text-align: center; transition: all var(--transition-base);
+  box-shadow: var(--ob-glow-card);
+}
+.cert-card:hover { border-color: var(--ob-blue-brd); box-shadow: var(--ob-glow-card-hover); transform: translateY(-2px); }
+.cert-icon {
+  width: 56px; height: 56px; border-radius: var(--radius-md);
+  background: var(--ob-blue-dim);
+  display: flex; align-items: center; justify-content: center;
+}
+.cert-name { font-size: 14px; font-weight: 700; color: var(--ob-fg); line-height: 1.35; }
+.cert-year { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ob-blue); }
+
+/* ── Speaking ── */
+.speaking-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.speaking-card {
+  background: var(--ob-surface); border: 1px solid var(--ob-border);
+  border-radius: var(--radius-lg); padding: 24px;
+  display: flex; flex-direction: column; gap: 10px;
+  text-decoration: none; transition: all var(--transition-base);
+  box-shadow: var(--ob-glow-card);
+}
+.speaking-card:hover { border-color: var(--ob-blue-brd); transform: translateY(-2px); box-shadow: var(--ob-glow-card-hover); }
+.speaking-type  { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ob-blue); }
+.speaking-talk  { font-size: 16px; font-weight: 700; color: var(--ob-fg); line-height: 1.3; letter-spacing: -0.015em; }
+.speaking-event { font-size: 13px; color: var(--ob-fg-2); font-weight: 500; }
+.speaking-meta  { font-size: 12px; color: var(--ob-fg-3); display: flex; gap: 8px; }
+.upcoming-pill {
+  font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 9999px;
+  background: rgba(255,215,0,0.08); color: #FFD700;
+  border: 1px solid rgba(255,215,0,0.25); letter-spacing: 0.06em; text-transform: uppercase;
+}
+
+/* ── CTA ── */
+.cta-section {
+  padding: var(--space-section) var(--nav-padding-x);
+  background: var(--ob-base); position: relative; overflow: hidden;
+}
+.cta-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 55% 75% at 50% 50%, rgba(29,111,232,0.14) 0%, transparent 70%);
+}
+.cta-inner {
+  position: relative; z-index: 1;
+  max-width: var(--layout-narrow); margin: 0 auto; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 24px;
+}
+.cta-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 14px; border-radius: 9999px;
+  background: var(--ob-blue-dim); color: var(--ob-blue-lt);
+  border: 1px solid var(--ob-blue-brd);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase;
+}
+.cta-title { font-size: clamp(32px, 4vw, 52px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; color: var(--ob-fg); }
+.cta-sub   { font-size: 18px; color: var(--ob-fg-2); line-height: 1.6; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+/* ── Footer ── */
+footer {
+  background: var(--ob-canvas); border-top: 1px solid var(--ob-border);
+  padding: 32px var(--nav-padding-x);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-left { display: flex; align-items: center; gap: 10px; }
+.footer-mark {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--ob-blue);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: #fff;
+}
+.footer-name  { font-size: 13px; font-weight: 600; color: var(--ob-fg-2); }
+.footer-links { display: flex; gap: 20px; }
+.footer-link  { font-size: 13px; color: var(--ob-fg-3); text-decoration: none; transition: color var(--transition-fast); }
+.footer-link:hover { color: var(--ob-fg-2); }
+.footer-copy  { font-size: 12px; color: var(--ob-fg-3); }
+
+/* ── Reveal ── */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity var(--duration-reveal) var(--ease-decelerate), transform var(--duration-reveal) var(--ease-decelerate); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 100ms; }
+  .reveal-delay-2 { transition-delay: 200ms; }
+  .reveal-delay-3 { transition-delay: 320ms; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a class="nav-logo" href="#">
+    <div class="nav-mark">AB</div>
+    <div class="nav-identity">
+      <span class="nav-name">Adam Bezance</span>
+      <span class="nav-title">Agent Architect</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#about">About</a>
+    <a class="nav-link" href="#blog">Blog</a>
+    <a class="nav-link" href="#speaking">Speaking</a>
+    <a class="nav-link" href="#certifications">Certifications</a>
+    <a class="nav-link" href="#contact">Contact</a>
+    <a class="nav-cta" href="#contact">Let's Talk</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" data-screen-label="Hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">⭐ Microsoft MVP Candidate 2026</div>
+    <h1 class="hero-title">Building the<br>Future with<br>Microsoft AI.</h1>
+    <p class="hero-sub">Power Platform · Copilot Studio · M365 Copilot. From automating enterprise workflows to architecting intelligent agents — I share everything I learn.</p>
+    <div class="hero-pills">
+      <span class="hero-pill" style="background:var(--ob-blue-dim);color:var(--ob-blue-lt);border-color:var(--ob-blue-brd)">Power Platform</span>
+      <span class="hero-pill" style="background:var(--ob-blue-dim);color:var(--ob-blue-lt);border-color:var(--ob-blue-brd)">Copilot Studio</span>
+      <span class="hero-pill" style="background:var(--ob-blue-dim);color:var(--ob-blue-lt);border-color:var(--ob-blue-brd)">M365 Copilot</span>
+      <span class="hero-pill" style="background:var(--ob-blue-dim);color:var(--ob-blue-lt);border-color:var(--ob-blue-brd)">Power Automate</span>
+    </div>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#blog">Read the Blog →</a>
+      <a class="btn-secondary" href="#speaking">Speaking &amp; Events</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">47</div><div class="hero-stat-label">Articles Published</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">12</div><div class="hero-stat-label">Speaking Events</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">8</div><div class="hero-stat-label">Certifications</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">6+</div><div class="hero-stat-label">Years in Platform</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about" data-screen-label="About">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-photo-wrap reveal">
+        <div class="about-photo"><div class="about-photo-placeholder">AB</div></div>
+        <div class="about-photo-badge">
+          <div class="about-badge-num">47</div>
+          <div class="about-badge-label">Articles</div>
+        </div>
+      </div>
+      <div class="about-content reveal reveal-delay-1">
+        <div class="section-eyebrow">About Me</div>
+        <h2 style="font-size:clamp(26px,3vw,40px);font-weight:800;letter-spacing:-0.03em;line-height:1.15;color:var(--ob-fg)">Agent Architect, community builder, Microsoft AI nerd.</h2>
+        <p class="about-bio">I'm Adam — a Power Platform and Microsoft AI specialist with 6+ years building automation and intelligent solutions for enterprise organisations. I believe in sharing knowledge openly: every article, talk, and tutorial is my way of paying forward what the community has given me.</p>
+        <p class="about-bio">Currently deep in Copilot Studio and M365 Copilot extensibility. On a mission to earn Microsoft MVP recognition by helping others build smarter, faster, and with more confidence.</p>
+        <div class="about-tags">
+          <span class="about-tag" style="background:var(--ob-blue-dim);color:var(--ob-blue-lt);border-color:var(--ob-blue-brd)">Power Platform</span>
+          <span class="about-tag" style="background:var(--ob-blue-dim);color:var(--ob-blue-lt);border-color:var(--ob-blue-brd)">Copilot Studio</span>
+          <span class="about-tag" style="background:var(--ob-blue-dim);color:var(--ob-blue-lt);border-color:var(--ob-blue-brd)">M365 Copilot</span>
+          <span class="about-tag" style="background:var(--ob-blue-dim);color:var(--ob-blue-lt);border-color:var(--ob-blue-brd)">Power Automate</span>
+          <span class="about-tag" style="background:rgba(255,255,255,0.04);color:var(--ob-fg-2);border-color:var(--ob-border-md)">AI Builder</span>
+          <span class="about-tag" style="background:rgba(255,255,255,0.04);color:var(--ob-fg-2);border-color:var(--ob-border-md)">SharePoint</span>
+        </div>
+        <div style="margin-top:8px">
+          <a class="btn-primary" href="#contact" style="display:inline-flex;font-size:14px;padding:11px 24px">Get in touch →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="section section-alt" id="blog" data-screen-label="Blog">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Latest Writing</div>
+      <h2 class="section-title">From the Blog</h2>
+      <p class="section-sub">Practical guides, deep-dives, and hard-won lessons from the trenches of Microsoft AI.</p>
+    </div>
+    <div class="blog-grid">
+      <a class="card reveal" href="#" style="padding:28px">
+        <div class="card-cat">Copilot Studio</div>
+        <div class="card-title">Building Your First AI Agent in Copilot Studio — A Complete Walkthrough</div>
+        <div class="card-excerpt">From blank canvas to fully deployed conversational agent: I walk through every step including topic design, entity extraction, AI Builder integration, and Teams channel deployment. No code required.</div>
+        <div class="card-meta">3 Jun 2026 · 12 min read</div>
+      </a>
+      <a class="card reveal reveal-delay-1" href="#">
+        <div class="card-cat">Power Platform</div>
+        <div class="card-title-sm">Power Automate + AI Builder: End-to-End Approval Workflows</div>
+        <div class="card-excerpt-sm">Chain AI models into a full automated approval flow with human-in-the-loop fallback.</div>
+        <div class="card-meta">20 May 2026 · 8 min read</div>
+      </a>
+      <a class="card reveal reveal-delay-2" href="#">
+        <div class="card-cat">M365 Copilot</div>
+        <div class="card-title-sm">Governing M365 Copilot at Scale: DLP, Sensitivity Labels &amp; Policies</div>
+        <div class="card-excerpt-sm">Everything your IT team needs to deploy Copilot safely across the tenant.</div>
+        <div class="card-meta">5 May 2026 · 10 min read</div>
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:48px" class="reveal">
+      <a class="btn-secondary" href="#">View all articles →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="section" id="certifications" data-screen-label="Certifications">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Credentials</div>
+      <h2 class="section-title">Certifications</h2>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none"><rect x="4" y="4" width="11" height="11" fill="#1D6FE8"/><rect x="17" y="4" width="11" height="11" fill="#7BB3FF" opacity="0.7"/><rect x="4" y="17" width="11" height="11" fill="#7BB3FF" opacity="0.5"/><rect x="17" y="17" width="11" height="11" fill="#1D6FE8" opacity="0.5"/></svg>
+        </div>
+        <div class="cert-name">PL-900 Power Platform Fundamentals</div>
+        <div class="cert-year">Certified</div>
+      </div>
+      <div class="cert-card reveal reveal-delay-1">
+        <div class="cert-icon">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" fill="none" stroke="#1D6FE8" stroke-width="2.5"/><circle cx="16" cy="16" r="5" fill="#1D6FE8"/></svg>
+        </div>
+        <div class="cert-name">PL-200 Power Platform Functional Consultant</div>
+        <div class="cert-year">Certified</div>
+      </div>
+      <div class="cert-card reveal reveal-delay-2">
+        <div class="cert-icon">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none"><path d="M16 4 L28 10 L28 22 L16 28 L4 22 L4 10 Z" fill="none" stroke="#7BB3FF" stroke-width="2.5"/><circle cx="16" cy="16" r="4" fill="#1D6FE8"/></svg>
+        </div>
+        <div class="cert-name">PL-400 Power Platform Developer</div>
+        <div class="cert-year">Certified</div>
+      </div>
+      <div class="cert-card reveal reveal-delay-3">
+        <div class="cert-icon">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none"><path d="M8 24 L16 8 L24 24" stroke="#1D6FE8" stroke-width="2.5" fill="none" stroke-linejoin="round"/><line x1="10" y1="20" x2="22" y2="20" stroke="#7BB3FF" stroke-width="2.5"/></svg>
+        </div>
+        <div class="cert-name">AI-102 Azure AI Engineer Associate</div>
+        <div class="cert-year">Certified</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAKING -->
+<section class="section section-alt" id="speaking" data-screen-label="Speaking">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Speaking &amp; Events</div>
+      <h2 class="section-title">On Stage &amp; On Air</h2>
+      <p class="section-sub">Conferences, webinars, podcasts and community events where I've shared the platform story.</p>
+    </div>
+    <div class="speaking-grid">
+      <a class="speaking-card reveal" href="#">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="speaking-type">Conference</div>
+          <div class="upcoming-pill">Upcoming</div>
+        </div>
+        <div class="speaking-talk">Extending Copilot Studio with Custom AI Actions</div>
+        <div class="speaking-event">Microsoft Power Platform Conference</div>
+        <div class="speaking-meta"><span>Oct 2026</span><span>· Las Vegas, NV</span></div>
+      </a>
+      <a class="speaking-card reveal reveal-delay-1" href="#">
+        <div class="speaking-type">Webinar</div>
+        <div class="speaking-talk">M365 Copilot Governance Deep Dive</div>
+        <div class="speaking-event">Microsoft Community Live</div>
+        <div class="speaking-meta"><span>Apr 2026</span><span>· Online</span></div>
+      </a>
+      <a class="speaking-card reveal reveal-delay-2" href="#">
+        <div class="speaking-type">Podcast</div>
+        <div class="speaking-talk">The Future of Agentic AI in Enterprise</div>
+        <div class="speaking-event">Power Platform Podcast</div>
+        <div class="speaking-meta"><span>Mar 2026</span><span>· Online</span></div>
+      </a>
+      <a class="speaking-card reveal reveal-delay-1" href="#">
+        <div class="speaking-type">Conference</div>
+        <div class="speaking-talk">Zero-Code Agents: Copilot Studio for Business Users</div>
+        <div class="speaking-event">European Power Platform Conference</div>
+        <div class="speaking-meta"><span>Jun 2026</span><span>· Dublin, IE</span></div>
+      </a>
+      <a class="speaking-card reveal reveal-delay-2" href="#">
+        <div class="speaking-type">Community</div>
+        <div class="speaking-talk">Power Platform User Group — AI Builder Masterclass</div>
+        <div class="speaking-event">PPUG London</div>
+        <div class="speaking-meta"><span>Feb 2026</span><span>· London, UK</span></div>
+      </a>
+      <a class="speaking-card reveal reveal-delay-3" href="#">
+        <div class="speaking-type">Workshop</div>
+        <div class="speaking-talk">Hands-On: Build and Deploy a Copilot in 90 Minutes</div>
+        <div class="speaking-event">Microsoft Ignite After-Party</div>
+        <div class="speaking-meta"><span>Nov 2025</span><span>· Chicago, IL</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta-section" id="contact" data-screen-label="Contact">
+  <div class="cta-bg"></div>
+  <div class="cta-inner reveal">
+    <div class="cta-eyebrow">Let's Build Something</div>
+    <h2 class="cta-title">Got a project, talk,<br>or question?</h2>
+    <p class="cta-sub">Whether you need a Copilot Studio build, a Power Platform architecture review, or just want to connect — my inbox is open.</p>
+    <div class="cta-actions">
+      <a class="btn-primary" href="mailto:adam@bezance.ai">Send me a message →</a>
+      <a class="btn-secondary" href="#">Download my one-pager</a>
+    </div>
+    <div style="display:flex;gap:24px;margin-top:8px;flex-wrap:wrap;justify-content:center">
+      <a href="#" style="font-size:13px;color:var(--ob-fg-3);text-decoration:none;transition:color var(--transition-fast)" onmouseover="this.style.color='var(--ob-fg-2)'" onmouseout="this.style.color='var(--ob-fg-3)'">LinkedIn →</a>
+      <a href="#" style="font-size:13px;color:var(--ob-fg-3);text-decoration:none;transition:color var(--transition-fast)" onmouseover="this.style.color='var(--ob-fg-2)'" onmouseout="this.style.color='var(--ob-fg-3)'">GitHub →</a>
+      <a href="#" style="font-size:13px;color:var(--ob-fg-3);text-decoration:none;transition:color var(--transition-fast)" onmouseover="this.style.color='var(--ob-fg-2)'" onmouseout="this.style.color='var(--ob-fg-3)'">Twitter / X →</a>
+      <a href="#" style="font-size:13px;color:var(--ob-fg-3);text-decoration:none;transition:color var(--transition-fast)" onmouseover="this.style.color='var(--ob-fg-2)'" onmouseout="this.style.color='var(--ob-fg-3)'">YouTube →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-mark">AB</div>
+    <span class="footer-name">Adam Bezance · Agent Architect</span>
+  </div>
+  <div class="footer-links">
+    <a class="footer-link" href="#about">About</a>
+    <a class="footer-link" href="#blog">Blog</a>
+    <a class="footer-link" href="#speaking">Speaking</a>
+    <a class="footer-link" href="#contact">Contact</a>
+  </div>
+  <span class="footer-copy">© 2026 Adam Bezance</span>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+  }, { threshold: 0.10 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

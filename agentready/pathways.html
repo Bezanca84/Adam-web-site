@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pathways — AgentReady</title>
+<meta name="description" content="Structured learning tracks for IT admins, developers, and business users working with M365 Copilot and Copilot Studio.">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── Pathway selector ──────────────────────────────────────── */
+.path-selector {
+  background: var(--base); border-bottom: 1px solid var(--border);
+  padding: 0 var(--pad-x);
+  position: sticky; top: var(--nav-h); z-index: 50;
+}
+.path-selector-inner {
+  max-width: var(--wide); margin: 0 auto;
+  display: flex; gap: 4px;
+}
+.path-tab {
+  font-size: 13px; font-weight: 600; color: var(--fg-3);
+  text-decoration: none; padding: 18px 16px; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+  display: flex; align-items: center; gap: 8px;
+}
+.path-tab:hover { color: var(--fg-2); }
+.path-tab.active-admin   { color: var(--blue-lt); border-bottom-color: var(--blue); }
+.path-tab.active-dev     { color: var(--violet);  border-bottom-color: var(--violet); }
+.path-tab.active-biz     { color: var(--green);   border-bottom-color: var(--green); }
+
+/* ── Pathway sections ──────────────────────────────────────── */
+.pathway {
+  padding: 80px var(--pad-x);
+  border-bottom: 1px solid var(--border);
+}
+.pathway:nth-child(even) { background: var(--base); }
+.pathway-inner { max-width: var(--wide); margin: 0 auto; }
+
+/* Pathway header */
+.pathway-header {
+  display: grid; grid-template-columns: 1fr 1.5fr; gap: 64px; align-items: start;
+  margin-bottom: 56px; padding-bottom: 48px; border-bottom: 1px solid var(--border);
+}
+.pathway-audience { display: flex; flex-direction: column; gap: 16px; }
+.pathway-title { font-size: clamp(28px, 3.5vw, 42px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--fg); }
+.pathway-about { font-size: 16px; color: var(--fg-2); line-height: 1.65; }
+.pathway-meta { display: flex; flex-direction: column; gap: 12px; }
+.pathway-meta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.pathway-meta-item {
+  padding: 10px 14px; border-radius: var(--r-md);
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.pathway-meta-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-3); }
+.pathway-meta-value { font-size: 14px; font-weight: 600; color: var(--fg); }
+
+/* Steps layout */
+.steps-grid { display: flex; flex-direction: column; gap: 16px; }
+.pathway-step {
+  display: grid; grid-template-columns: 52px 1fr; gap: 20px; align-items: start;
+  padding: 24px; border-radius: var(--r-lg);
+  background: var(--surface); border: 1px solid var(--border);
+  box-shadow: var(--glow-card);
+  transition: border-color var(--t-base) var(--ease), transform var(--t-base) var(--ease);
+}
+.pathway-step:hover { border-color: var(--blue-brd); transform: translateX(4px); }
+.pathway-step.admin:hover  { border-color: var(--blue-brd); }
+.pathway-step.dev:hover    { border-color: rgba(155,138,251,0.35); }
+.pathway-step.biz:hover    { border-color: rgba(52,211,153,0.30); }
+
+.step-badge {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.step-badge.admin  { background: var(--blue); box-shadow: 0 4px 16px rgba(29,111,232,0.40); }
+.step-badge.dev    { background: var(--violet); box-shadow: 0 4px 16px rgba(155,138,251,0.40); }
+.step-badge.biz    { background: var(--green);  box-shadow: 0 4px 16px rgba(52,211,153,0.35); }
+
+.step-content { display: flex; flex-direction: column; gap: 8px; }
+.step-title { font-size: 16px; font-weight: 700; color: var(--fg); letter-spacing: -0.01em; }
+.step-desc  { font-size: 14px; color: var(--fg-2); line-height: 1.6; }
+.step-detail { font-size: 13px; color: var(--fg-3); line-height: 1.55; margin-top: 2px; }
+.step-tags  { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.step-tag   {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: var(--r-full); border: 1px solid;
+}
+.step-tag.admin { background: var(--blue-dim); color: var(--blue-lt); border-color: var(--blue-brd); }
+.step-tag.dev   { background: rgba(155,138,251,0.12); color: var(--violet); border-color: rgba(155,138,251,0.30); }
+.step-tag.biz   { background: var(--green-bg); color: var(--green); border-color: rgba(52,211,153,0.30); }
+
+/* Pathway CTA */
+.pathway-cta {
+  margin-top: 32px; padding: 24px 28px; border-radius: var(--r-lg);
+  display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.pathway-cta.admin { background: var(--blue-dim); border: 1px solid var(--blue-brd); }
+.pathway-cta.dev   { background: rgba(155,138,251,0.10); border: 1px solid rgba(155,138,251,0.28); }
+.pathway-cta.biz   { background: var(--green-bg); border: 1px solid rgba(52,211,153,0.28); }
+.pathway-cta-text  { font-size: 15px; color: var(--fg-2); line-height: 1.5; }
+.pathway-cta-text strong { color: var(--fg); display: block; margin-bottom: 4px; }
+
+@media (max-width: 768px) {
+  .pathway-header { grid-template-columns: 1fr; gap: 32px; }
+  .pathway-step   { grid-template-columns: 44px 1fr; gap: 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-mark">AR</div>
+      <div class="nav-identity">
+        <span class="nav-name">AgentReady</span>
+        <span class="nav-sub">Microsoft AI · Copilot · Agents</span>
+      </div>
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="learn.html">Learn</a>
+      <a class="nav-link active" href="pathways.html">Pathways</a>
+      <a class="nav-link" href="use-cases.html">Use Cases</a>
+      <a class="nav-link" href="resources.html">Resources</a>
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-cta" href="index.html#newsletter">Subscribe</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-inner">
+    <div class="eyebrow">Pathways</div>
+    <h1 class="page-title">Learning tracks</h1>
+    <p class="page-desc">Structured, role-matched paths through the Microsoft AI landscape. Know exactly where to start and what to focus on for your situation.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+      <a class="pill pill-blue" href="#it-admin">IT Admin</a>
+      <a class="pill pill-violet" href="#developer">Developer</a>
+      <a class="pill pill-green" href="#business-user">Business User</a>
+    </div>
+  </div>
+</div>
+
+<!-- PATHWAY TABS -->
+<div class="path-selector">
+  <div class="path-selector-inner">
+    <a class="path-tab active-admin" href="#it-admin">IT Admin</a>
+    <a class="path-tab" href="#developer">Developer</a>
+    <a class="path-tab" href="#business-user">Business User</a>
+  </div>
+</div>
+
+<!-- PATHWAY 1: IT ADMIN -->
+<section class="pathway" id="it-admin">
+  <div class="pathway-inner">
+    <div class="pathway-header reveal">
+      <div class="pathway-audience">
+        <div class="pill pill-blue" style="width:fit-content">IT Admin</div>
+        <h2 class="pathway-title">Enable and govern Microsoft AI in your organisation</h2>
+        <p class="pathway-about">You're responsible for tenant health, licensing, data governance, and security. Your job with Microsoft AI isn't to build agents — it's to make sure Copilot is enabled safely, the data estate is in good shape, and the organisation can use these tools without creating compliance risk.</p>
+      </div>
+      <div class="pathway-meta">
+        <div class="pathway-meta-row">
+          <div class="pathway-meta-item">
+            <span class="pathway-meta-label">Steps</span>
+            <span class="pathway-meta-value">5</span>
+          </div>
+          <div class="pathway-meta-item">
+            <span class="pathway-meta-label">Focus</span>
+            <span class="pathway-meta-value">M365 Copilot, Tenant governance, Copilot Studio policies</span>
+          </div>
+          <div class="pathway-meta-item">
+            <span class="pathway-meta-label">Tools needed</span>
+            <span class="pathway-meta-value">Microsoft 365 Admin Centre, Purview, Entra ID</span>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--fg-3);line-height:1.6">This pathway assumes you have global admin or equivalent access to your Microsoft 365 tenant and familiarity with the admin centre.</p>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+      <div class="pathway-step admin reveal">
+        <div class="step-badge admin">1</div>
+        <div class="step-content">
+          <div class="step-title">Understand what Copilot can see in your tenant</div>
+          <div class="step-desc">Before enabling Copilot for anyone, audit what data is accessible to who. Copilot surfaces content users already have permission to access — which means overshared SharePoint sites, broad security groups, and poorly labelled documents will all become visible through Copilot queries. Run a SharePoint access review first.</div>
+          <div class="step-detail">Key actions: SharePoint permission audit, check site-wide sharing links, review external sharing settings, identify broadly accessible sensitive content.</div>
+          <div class="step-tags"><span class="step-tag admin">M365 Admin</span><span class="step-tag admin">Purview</span><span class="step-tag admin">SharePoint Admin</span></div>
+        </div>
+      </div>
+      <div class="pathway-step admin reveal reveal-d1">
+        <div class="step-badge admin">2</div>
+        <div class="step-content">
+          <div class="step-title">Configure Microsoft Purview sensitivity labels and DLP</div>
+          <div class="step-desc">Copilot respects sensitivity labels — content marked as Confidential won't be summarised or surfaced in responses to users who don't have access. Set up and enforce sensitivity labels before rolling out Copilot broadly. Data Loss Prevention policies should also be configured to catch Copilot-specific scenarios.</div>
+          <div class="step-detail">Key actions: Define label taxonomy, apply auto-labelling policies, configure Copilot-specific DLP policies in Purview, test label enforcement with Copilot responses.</div>
+          <div class="step-tags"><span class="step-tag admin">Microsoft Purview</span><span class="step-tag admin">DLP</span><span class="step-tag admin">Sensitivity Labels</span></div>
+        </div>
+      </div>
+      <div class="pathway-step admin reveal">
+        <div class="step-badge admin">3</div>
+        <div class="step-content">
+          <div class="step-title">Enable M365 Copilot and assign licenses</div>
+          <div class="step-desc">Once data governance is in reasonable shape, enable the Copilot add-on in the Microsoft 365 admin centre and assign licenses. Start with a pilot group — ideally a cross-functional set of power users who will give you useful feedback and can champion adoption. Don't roll out to everyone at once.</div>
+          <div class="step-detail">Key actions: Purchase and assign Copilot licenses, enable Copilot in M365 admin, set up pilot group, configure usage policies (what Copilot can and can't do), communicate to pilot users.</div>
+          <div class="step-tags"><span class="step-tag admin">M365 Admin</span><span class="step-tag admin">Licensing</span></div>
+        </div>
+      </div>
+      <div class="pathway-step admin reveal reveal-d1">
+        <div class="step-badge admin">4</div>
+        <div class="step-content">
+          <div class="step-title">Set up Copilot usage reporting and monitoring</div>
+          <div class="step-desc">Microsoft provides Copilot usage analytics in the Microsoft 365 admin centre and through Viva Insights. Set up dashboards to track adoption, feature usage by app, and user activity. This data is essential for ROI measurement and for identifying where adoption support is needed.</div>
+          <div class="step-detail">Key actions: Enable Copilot usage reports in M365 admin, configure Viva Insights dashboard, set up retention policies for Copilot interaction logs, define what usage signals you'll track for success.</div>
+          <div class="step-tags"><span class="step-tag admin">Viva Insights</span><span class="step-tag admin">M365 Admin</span><span class="step-tag admin">Reporting</span></div>
+        </div>
+      </div>
+      <div class="pathway-step admin reveal">
+        <div class="step-badge admin">5</div>
+        <div class="step-content">
+          <div class="step-title">Govern Copilot Studio deployments</div>
+          <div class="step-desc">If developers or power users are building agents in Copilot Studio, you need governance guardrails. This means Power Platform environment policies, data loss prevention for connectors, and approval processes for publishing agents to Teams or SharePoint. Copilot Studio agents with broad permissions can cause real damage if not governed properly.</div>
+          <div class="step-detail">Key actions: Define Power Platform DLP policies, create environment strategy (dev / test / prod), set Copilot Studio publishing policies, require security review for agents that write to business systems.</div>
+          <div class="step-tags"><span class="step-tag admin">Power Platform</span><span class="step-tag admin">Copilot Studio</span><span class="step-tag admin">DLP</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pathway-cta admin reveal" style="margin-top:32px">
+      <div class="pathway-cta-text">
+        <strong>Want the foundational knowledge first?</strong>
+        The Learn section covers what M365 Copilot is and how it works — useful context before diving into admin configuration.
+      </div>
+      <a class="btn btn-primary btn-sm" href="learn.html#m365-copilot">Read the explainer →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PATHWAY 2: DEVELOPER -->
+<section class="pathway" id="developer">
+  <div class="pathway-inner">
+    <div class="pathway-header reveal">
+      <div class="pathway-audience">
+        <div class="pill pill-violet" style="width:fit-content">Developer</div>
+        <h2 class="pathway-title">Build agents and extend Microsoft AI with Copilot Studio</h2>
+        <p class="pathway-about">You're building solutions — whether that's as a Power Platform developer, a consultant implementing for clients, or a software developer extending into the Microsoft AI space. Your focus is on what's buildable, how it integrates with existing systems, and what the resulting solution actually does reliably.</p>
+      </div>
+      <div class="pathway-meta">
+        <div class="pathway-meta-row">
+          <div class="pathway-meta-item">
+            <span class="pathway-meta-label">Steps</span>
+            <span class="pathway-meta-value">5</span>
+          </div>
+          <div class="pathway-meta-item">
+            <span class="pathway-meta-label">Focus</span>
+            <span class="pathway-meta-value">Copilot Studio, Power Automate, agent design</span>
+          </div>
+          <div class="pathway-meta-item">
+            <span class="pathway-meta-label">Prerequisites</span>
+            <span class="pathway-meta-value">Power Platform basics helpful but not required</span>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--fg-3);line-height:1.6">This pathway works whether you're new to Copilot Studio or transitioning from the classic Power Virtual Agents.</p>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+      <div class="pathway-step dev reveal">
+        <div class="step-badge dev">1</div>
+        <div class="step-content">
+          <div class="step-title">Set up your development environment</div>
+          <div class="step-desc">You need a Power Platform environment to build in. If you don't have a developer tenant, create one at developer.microsoft.com/en-us/microsoft-365/dev-program. Set up a dedicated development environment in Power Platform admin — don't build in your default environment or in production.</div>
+          <div class="step-detail">Key actions: Create Microsoft 365 developer tenant (or use existing), provision a Power Platform dev environment, enable Dataverse, sign in to copilotstudio.microsoft.com.</div>
+          <div class="step-tags"><span class="step-tag dev">Power Platform</span><span class="step-tag dev">Copilot Studio</span></div>
+        </div>
+      </div>
+      <div class="pathway-step dev reveal reveal-d1">
+        <div class="step-badge dev">2</div>
+        <div class="step-content">
+          <div class="step-title">Build a knowledge-based agent from scratch</div>
+          <div class="step-desc">Create a new agent in Copilot Studio. Write clear, specific agent instructions — this is the most impactful thing you'll do. Add a knowledge source (a SharePoint site or uploaded document) and test it thoroughly in the test panel. Learn what "generative answers" mode does vs. classic topics.</div>
+          <div class="step-detail">Key actions: Create blank agent, write system instructions, add SharePoint knowledge source, test with 20+ varied questions, review which questions it handles vs fails, refine instructions based on failure patterns.</div>
+          <div class="step-tags"><span class="step-tag dev">Copilot Studio</span><span class="step-tag dev">Generative AI</span><span class="step-tag dev">Knowledge Sources</span></div>
+        </div>
+      </div>
+      <div class="pathway-step dev reveal">
+        <div class="step-badge dev">3</div>
+        <div class="step-content">
+          <div class="step-title">Add Power Automate actions</div>
+          <div class="step-desc">Connect your agent to Power Automate to give it the ability to take actions. Start with something simple: create a task in Planner or send a Teams notification. Then progress to something that reads from a data source — a SharePoint list, Dataverse table, or an external API via a connector. This is where agents become genuinely useful.</div>
+          <div class="step-detail">Key actions: Build a Power Automate cloud flow triggered from Copilot Studio, pass user input as dynamic parameters, handle success and error responses, surface the result back in the conversation.</div>
+          <div class="step-tags"><span class="step-tag dev">Power Automate</span><span class="step-tag dev">Connectors</span><span class="step-tag dev">Actions</span></div>
+        </div>
+      </div>
+      <div class="pathway-step dev reveal reveal-d1">
+        <div class="step-badge dev">4</div>
+        <div class="step-content">
+          <div class="step-title">Design for reliability and failure</div>
+          <div class="step-desc">Good agents don't just handle the happy path. Build explicit fallback topics for when the AI doesn't understand. Add graceful error handling when Power Automate flows fail. Define escalation paths — how does a user reach a human when the agent can't help? Testing adversarially is just as important as testing the intended flow.</div>
+          <div class="step-detail">Key actions: Create fallback topic, test edge cases and off-topic inputs, add flow error handling with user-friendly messages, implement human escalation, load test with volume if deploying broadly.</div>
+          <div class="step-tags"><span class="step-tag dev">Error Handling</span><span class="step-tag dev">Testing</span><span class="step-tag dev">UX Design</span></div>
+        </div>
+      </div>
+      <div class="pathway-step dev reveal">
+        <div class="step-badge dev">5</div>
+        <div class="step-content">
+          <div class="step-title">Deploy and extend to Teams or M365 Copilot</div>
+          <div class="step-desc">Publish your agent. For internal tools, Teams is usually the right channel — users are already there and adoption friction is low. If you want to extend M365 Copilot with your agent's capabilities, publish it as an M365 Copilot plugin. This lets M365 Copilot invoke your agent's actions when relevant to a user's query.</div>
+          <div class="step-detail">Key actions: Publish to Teams via app package, configure channel-specific settings, submit to Teams admin for approval, optionally configure as M365 Copilot plugin, set up usage analytics.</div>
+          <div class="step-tags"><span class="step-tag dev">Teams</span><span class="step-tag dev">M365 Copilot</span><span class="step-tag dev">Deployment</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pathway-cta dev reveal" style="margin-top:32px">
+      <div class="pathway-cta-text">
+        <strong>See what you can build</strong>
+        The Use Cases section has detailed scenarios for agents — HR onboarding, IT helpdesk, and more — including what you need and what realistic outcomes look like.
+      </div>
+      <a class="btn btn-secondary btn-sm" href="use-cases.html">Browse use cases →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PATHWAY 3: BUSINESS USER -->
+<section class="pathway" id="business-user">
+  <div class="pathway-inner">
+    <div class="pathway-header reveal">
+      <div class="pathway-audience">
+        <div class="pill pill-green" style="width:fit-content">Business User</div>
+        <h2 class="pathway-title">Get real value from M365 Copilot in your daily work</h2>
+        <p class="pathway-about">You're not building agents — you're a professional who works in Microsoft 365 every day and wants to understand whether Copilot is worth the hype, and how to actually get useful outputs from it. This track is about building practical prompting skills and identifying the use cases where Copilot genuinely saves you time.</p>
+      </div>
+      <div class="pathway-meta">
+        <div class="pathway-meta-row">
+          <div class="pathway-meta-item">
+            <span class="pathway-meta-label">Steps</span>
+            <span class="pathway-meta-value">5</span>
+          </div>
+          <div class="pathway-meta-item">
+            <span class="pathway-meta-label">Focus</span>
+            <span class="pathway-meta-value">M365 Copilot in Teams, Outlook, Word, Excel</span>
+          </div>
+          <div class="pathway-meta-item">
+            <span class="pathway-meta-label">Prerequisites</span>
+            <span class="pathway-meta-value">M365 Copilot license from your IT admin</span>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--fg-3);line-height:1.6">If you don't have a Copilot license, ask your IT admin. Some organisations are running pilots — you may be able to get access for evaluation.</p>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+      <div class="pathway-step biz reveal">
+        <div class="step-badge biz">1</div>
+        <div class="step-content">
+          <div class="step-title">Start with meeting summaries in Teams</div>
+          <div class="step-desc">The quickest win with Copilot. After any transcribed Teams meeting, open the recap tab and ask Copilot to summarise key decisions and action items. Compare what it produces against what you'd have written manually. This single use case alone justifies the learning investment for most people who sit in a lot of meetings.</div>
+          <div class="step-detail">You need: Teams meetings with transcription enabled (your admin may need to turn this on). Ask IT if you're not sure.</div>
+          <div class="step-tags"><span class="step-tag biz">Teams</span><span class="step-tag biz">Meetings</span></div>
+        </div>
+      </div>
+      <div class="pathway-step biz reveal reveal-d1">
+        <div class="step-badge biz">2</div>
+        <div class="step-content">
+          <div class="step-title">Use Copilot in Outlook to manage your inbox</div>
+          <div class="step-desc">Open a long email thread and ask Copilot to summarise it — "What are the key points and any open questions in this thread?" Then try drafting a reply: give Copilot context about what you want to say and let it draft. You'll spend your time editing rather than writing from scratch. Works well for routine, professional correspondence.</div>
+          <div class="step-detail">Tip: The more specific your prompt, the better the output. "Draft a polite reply declining this meeting request, mentioning I'll follow up next week" produces much better results than "write a reply".</div>
+          <div class="step-tags"><span class="step-tag biz">Outlook</span><span class="step-tag biz">Email</span></div>
+        </div>
+      </div>
+      <div class="pathway-step biz reveal">
+        <div class="step-badge biz">3</div>
+        <div class="step-content">
+          <div class="step-title">Learn to write better prompts</div>
+          <div class="step-desc">Copilot's output quality is directly tied to how you prompt it. The shift in mindset is this: you're not asking a search engine, you're briefing a capable but literal assistant. Good prompts include context, the intended audience, the format you want, and any constraints. Bad prompts are one-liners with no context.</div>
+          <div class="step-detail">Framework to try: Goal → Context → Constraints → Format. "Summarise [X] (goal) in plain English for a non-technical audience (context), in under 200 words (constraint), as bullet points (format)."</div>
+          <div class="step-tags"><span class="step-tag biz">Prompting</span><span class="step-tag biz">Skill-building</span></div>
+        </div>
+      </div>
+      <div class="pathway-step biz reveal reveal-d1">
+        <div class="step-badge biz">4</div>
+        <div class="step-content">
+          <div class="step-title">Use Copilot in Word and Excel for documents and data</div>
+          <div class="step-desc">In Word, try asking Copilot to draft a first version of a document — a project summary, a stakeholder update, a policy brief. You'll get a reasonable first draft to edit rather than a blank page. In Excel, highlight a data range and ask Copilot to identify trends or explain what the data shows. Useful for tables you've been handed but haven't dug into yet.</div>
+          <div class="step-detail">Be cautious with Excel analysis: always verify Copilot's interpretations against the raw data. It can misread complex multi-sheet workbooks or draw spurious correlations.</div>
+          <div class="step-tags"><span class="step-tag biz">Word</span><span class="step-tag biz">Excel</span><span class="step-tag biz">Documents</span></div>
+        </div>
+      </div>
+      <div class="pathway-step biz reveal">
+        <div class="step-badge biz">5</div>
+        <div class="step-content">
+          <div class="step-title">Try Microsoft 365 Chat for cross-app questions</div>
+          <div class="step-desc">Microsoft 365 Chat (also called Business Chat) is a Copilot interface that works across your emails, meetings, chats, and files at once. You can ask things like "Catch me up on what's happened in the Contoso project this week" or "What were the open actions from last Thursday's leadership meeting?" This is the most powerful use of Copilot for knowledge workers — when you've been away or need a cross-context briefing.</div>
+          <div class="step-detail">Access it at microsoft365.com/chat or within Teams as a chat thread. Note: it only works with data you already have access to — it won't reveal content you're not permitted to see.</div>
+          <div class="step-tags"><span class="step-tag biz">M365 Chat</span><span class="step-tag biz">Cross-app</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pathway-cta biz reveal" style="margin-top:32px">
+      <div class="pathway-cta-text">
+        <strong>See real use cases</strong>
+        Browse practical scenarios with realistic outcomes — meeting summaries, document generation, and more.
+      </div>
+      <a class="btn btn-secondary btn-sm" href="use-cases.html">View use cases →</a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER CTA -->
+<section class="cta-band" id="newsletter">
+  <div class="cta-band-bg"></div>
+  <div class="cta-band-inner reveal">
+    <div class="pill pill-blue">Stay in the loop</div>
+    <h2 class="cta-title">New articles and pathways<br>as the platform evolves.</h2>
+    <p class="cta-sub">Practical content about Microsoft AI. No noise, no spam.</p>
+    <form class="nl-form" style="max-width:480px;width:100%" onsubmit="return false;">
+      <input class="nl-input" type="email" placeholder="your@email.com" required>
+      <button class="nl-btn" type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-mark">AR</div>
+        <span class="footer-wordmark">AgentReady</span>
+      </div>
+      <div class="footer-tagline">Your guide to Microsoft AI, Copilot, and agents</div>
+      <p class="footer-desc">Independent education by <a href="about.html">Adam Bezance</a>. No vendor agenda — just honest, practical content for people working with Microsoft AI day to day.</p>
+    </div>
+    <div>
+      <div class="footer-nav-title">Site</div>
+      <div class="footer-nav-links">
+        <a href="index.html">Home</a>
+        <a href="learn.html">Learn</a>
+        <a href="pathways.html">Pathways</a>
+        <a href="use-cases.html">Use Cases</a>
+        <a href="resources.html">Resources</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-nl-title">Stay up to date</div>
+      <div class="footer-nl-desc">New articles and use cases, straight to your inbox. No noise.</div>
+      <form class="nl-form" onsubmit="return false;">
+        <input class="nl-input" type="email" placeholder="your@email.com" required>
+        <button class="nl-btn" type="submit" style="padding:12px 20px;font-size:14px">Go</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 AgentReady · An independent resource by <a href="about.html">Adam Bezance</a></span>
+    <span class="footer-copy">Not affiliated with or endorsed by Microsoft</span>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 30));
+  const toggle = document.getElementById('nav-toggle');
+  const links  = document.getElementById('nav-links');
+  toggle?.addEventListener('click', () => links.classList.toggle('open'));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Pathway tab highlighting
+  const pathways = document.querySelectorAll('section[id]');
+  const tabs = document.querySelectorAll('.path-tab');
+  const colorMap = { 'it-admin': 'active-admin', 'developer': 'active-dev', 'business-user': 'active-biz' };
+  window.addEventListener('scroll', () => {
+    let current = '';
+    pathways.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    tabs.forEach(t => {
+      t.className = 'path-tab';
+      if (t.getAttribute('href') === '#' + current && colorMap[current]) t.classList.add(colorMap[current]);
+    });
+  });
+</script>
+</body>
+</html>
